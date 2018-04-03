@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/image_height_dividing_line_single"
+        android:layout_marginBottom="@dimen/list_item_user_review_vertical_padding"
+        android:background="@color/colorPrimaryLight" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingEnd="@dimen/list_item_user_review_horizontal_padding"
+        android:paddingLeft="@dimen/list_item_user_review_horizontal_padding"
+        android:paddingRight="@dimen/list_item_user_review_horizontal_padding"
+        android:paddingStart="@dimen/list_item_user_review_horizontal_padding">
+
+        <TextView
+            android:id="@+id/list_item_user_review_author_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/list_item_user_review_author_label"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/list_item_user_review_author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            tools:text="@string/fake_detail_movie_review_author_name" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/list_item_user_review_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/list_item_user_review_vertical_padding"
+        android:paddingEnd="@dimen/list_item_user_review_horizontal_padding"
+        android:paddingLeft="@dimen/list_item_user_review_horizontal_padding"
+        android:paddingRight="@dimen/list_item_user_review_horizontal_padding"
+        android:paddingStart="@dimen/list_item_user_review_horizontal_padding"
+        android:paddingTop="@dimen/list_item_user_review_vertical_padding"
+        android:textSize="16sp"
+        tools:text="@string/fake_detail_movie_review" />
+
+</LinearLayout>
