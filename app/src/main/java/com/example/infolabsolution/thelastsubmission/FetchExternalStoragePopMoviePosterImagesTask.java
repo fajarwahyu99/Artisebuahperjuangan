@@ -22,10 +22,6 @@ import com.example.infolabsolution.thelastsubmission.MovieBasicInfo;
 import com.example.infolabsolution.thelastsubmission.MainActivity;
 import com.example.infolabsolution.thelastsubmission.ExternalPathUtils;
 
-/**
- * Created by jane on 17-5-31.
- */
-
 public class FetchExternalStoragePopMoviePosterImagesTask extends AsyncTask<MovieBasicInfo, Void, String> {
 
     private Context context;

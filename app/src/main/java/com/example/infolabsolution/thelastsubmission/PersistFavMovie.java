@@ -19,10 +19,6 @@ import com.example.infolabsolution.thelastsubmission.FetchExternalStorageFavMovi
 import com.example.infolabsolution.thelastsubmission.MainActivity;
 import com.example.infolabsolution.thelastsubmission.ExternalPathUtils;
 
-/**
- * Created by jane on 17-7-14.
- */
-
 public class PersistFavMovie {
 
     private static final int POSTER_UP_TO_DATE = 111;
@@ -43,22 +39,6 @@ public class PersistFavMovie {
 
         Log.i(TAG, "Halloooooooooo, jag ar pa fav vag.");
 
-        /*
-        download pictures for favorite movies.
-
-        First reason: When we save the movie to fav list database, the 2 pics might not be downloaded
-        successfully yet.
-        And it will stay break, because we don't refresh fav list again(only call from database for
-        fav list).
-        (What we are doing now is giving fav list the opportunity to refresh the its pictures' external
-        url.)
-
-        Second reason (IMPORTANT): Every time we receive new movie data, we delete the cache tables
-        (both POP and TOP) and their external folders completely. But one old movie we have saved to
-        fav list before is still stay in our fav list, when it wants to fetch its external url, the
-        cache movie folders is already cleaned for new data. There is no way to find it.
-        We have to create folders for fav list to maintain its own data.
-        */
 
         Boolean enableOffline = getEnableOfflinePreference(context);
         if (enableOffline == true) {

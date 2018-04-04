@@ -11,13 +11,6 @@ import java.util.List;
 
 import com.example.infolabsolution.thelastsubmission.R;
 
-/**
- * Created by jane on 17-4-8.
- */
-
-/**
- * Exposes a list of current movie reviews to a {@link RecyclerView}.
- */
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdapterViewHolder> {
 
     private List<Review> mReviewData;
@@ -29,15 +22,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdap
     public ReviewAdapter() {
     }
 
-    /**
-     * This gets called when each new ViewHolder is created. This happens when the RecyclerView
-     * is laid out. Enough ViewHolders will be created to fill the screen and allow for scrolling.
-     *
-     * @param viewGroup The ViewGroup that these ViewHolders are contained within.
-     * @param viewType  If RecyclerView has more than one type of item (which this one don't)
-     *                  this viewType can be used to provide a different layout.
-     * @return A new ReviewAdapterViewHolder that holds the View for each list item
-     */
     @Override
     public ReviewAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
@@ -49,27 +33,13 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdap
         return new ReviewAdapterViewHolder(view);
     }
 
-    /**
-     * OnBindViewHolder is called by the RecyclerView to display the data at the specified
-     * position. In this method, update the contents of the ViewHolder to display the review
-     * authors and contents for each particular position, using the "position" argument that
-     * is conveniently passed in.
-     *
-     * @param reviewAdapterViewHolder The ViewHolder which should be updated to represent the
-     *                                contents of the item at the given position in the data set.
-     * @param position                The position of the item within the adapter's data set.
-     */
     @Override
     public void onBindViewHolder(ReviewAdapterViewHolder reviewAdapterViewHolder, int position) {
         reviewAdapterViewHolder.mReviewAuthor.setText(mAuthorStrings[position]);
         reviewAdapterViewHolder.mReviewContent.setText(mContentStrings[position]);
     }
 
-    /**
-     * This method simply returns the number of items to display.
-     *
-     * @return The number of items available on the review section.
-     */
+
     @Override
     public int getItemCount() {
         if (mReviewData == null) {
@@ -78,12 +48,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdap
         return mReviewData.size();
     }
 
-    /*
-    This method is used to set the review authors and contents on a ReviewAdapter if we've already
-    created one.
-    This is handy when getting new data from the web but don't want to create a new ReviewAdapter to
-    display it.
-    */
     public void setReviewData(List<Review> reviewData) {
         mReviewData = reviewData;
         String[] arrayAuthor = new String[reviewData.size()];
@@ -101,7 +65,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.ReviewAdap
         notifyDataSetChanged();
     }
 
-    // Cache of the children views for a review.
     public class ReviewAdapterViewHolder extends RecyclerView.ViewHolder {
         public final TextView mReviewAuthor;
         public final TextView mReviewContent;

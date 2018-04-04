@@ -9,9 +9,6 @@ import android.util.Log;
 
 import com.example.infolabsolution.thelastsubmission.PersistFavMovie;
 
-/**
- * Created by jane on 17-7-10.
- */
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class PersistFavService extends JobService {
@@ -28,13 +25,6 @@ public class PersistFavService extends JobService {
         return false;
     }
 
-    /**
-     * Because 2 background task were executed, that will need to be canceled if they are still
-     * running. This is where you want to be very careful, because any lingering threads could
-     * create a memory leak in the app! So clean up the code !
-     *
-     * @return true so if something happens, and the job stops in the middle, it will reschedule.
-     */
     @Override
     public boolean onStopJob(JobParameters params) {
         Log.i(TAG, "Halloooooooooo, jag ar pa stop job fav vag.");

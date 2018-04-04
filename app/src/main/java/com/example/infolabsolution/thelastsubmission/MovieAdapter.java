@@ -34,14 +34,6 @@ import com.example.infolabsolution.thelastsubmission.MovieContract.FavMovieEntry
 import com.example.infolabsolution.thelastsubmission.MainActivity;
 import com.example.infolabsolution.thelastsubmission.ExternalPathUtils;
 
-/**
- * Created by jane on 2/26/17.
- */
-
-/**
- * {@link MovieAdapter} exposes a list of movie posters to a
- * {@link android.support.v7.widget.RecyclerView}
- */
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapterViewHolder> {
 
     private static final String TAG = MovieAdapter.class.getSimpleName();
@@ -53,37 +45,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     private Cursor mCursor;
     private boolean mLoadFromDb;
 
-    /**
-     * An On-click handler that we've defined to make it easy for an Activity to interface with
-     * the RecyclerView
-     */
     private final MovieAdapterOnClickHandler mClickHandler;
 
     private ArrayList<String> mMoviePostersUrlStrings = new ArrayList<>();
 
     private MainActivity mainActivity;
 
-    /**
-     * Creates a MovieAdapter.
-     *
-     * @param clickHandler The on-click handler for this adapter. This single handler is called
-     *                     when an item is clicked.
-     * @param mainActivity The context to pass down for {@link Picasso}.with(mainActivity)...
-     */
     public MovieAdapter(MovieAdapterOnClickHandler clickHandler, MainActivity mainActivity) {
         mClickHandler = clickHandler;
         this.mainActivity = mainActivity;
     }
 
-    /**
-     * This gets called when each new ViewHolder is created. This happens when the RecyclerView
-     * is laid out. Enough ViewHolders will be created to fill the screen and allow for scrolling.
-     *
-     * @param viewGroup The ViewGroup that these ViewHolders are contained within.
-     * @param viewType  If RecyclerView has more than one type of item (which this one don't)
-     *                  this viewType can be used to provide a different layout.
-     * @return A new MovieAdapterViewHolder that holds the View for each list item
-     */
     @Override
     public MovieAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
@@ -108,7 +80,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     @Override
     public void onBindViewHolder(final MovieAdapterViewHolder movieAdapterViewHolder, final int position) {
 
-        // Those animation is a substitute for Picasso's placeholder.
         Animation a = AnimationUtils.loadAnimation(mainActivity, R.anim.progress_animation_main);
         a.setDuration(1000);
         movieAdapterViewHolder.mLoadingImageView.startAnimation(a);
@@ -122,7 +93,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
 
         if (mCursor != null) {
             mCursor.moveToPosition(position);
-            // set ContentDescription for every poster image.
             String original_title = mCursor.getString(mCursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_ORIGINAL_TITLE));
             movieAdapterViewHolder.mMoviePosterImageView.setContentDescription(original_title);
         }
@@ -162,7 +132,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                             String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_ORIGINAL_TITLE));
                             if (currentMovieTitle.contains(":")) {
                                 String[] separated = currentMovieTitle.split(":");
-                                // separate[1].trim() will remove the empty space to the second string
                                 movieAdapterViewHolder.mErrorMovieNameTextView.setText(separated[0] + ":" + "\n" + separated[1].trim());
                             } else {
                                 movieAdapterViewHolder.mErrorMovieNameTextView
@@ -174,7 +143,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                         }
                     });
 
-        } else if ("top_rated".equals(orderBy)) {
+        } else if ("now_playing".equals(orderBy)) {
             mCursor.moveToPosition(position);
             String moviePosterForOneMovie = mCursor.getString(mCursor
                     .getColumnIndex(CacheMovieTopRatedEntry.COLUMN_POSTER_PATH));
@@ -184,7 +153,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             final File pathToPic = new File(fullMoviePosterForOneMovie);
 
             Picasso.with(mainActivity)
-                    // PosterPath from external storage
                     .load(pathToPic)
                     .error(R.drawable.pic_error_loading_w370)
                     .into(movieAdapterViewHolder.mMoviePosterImageView, new Callback() {
@@ -201,7 +169,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                             String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_ORIGINAL_TITLE));
                             if (currentMovieTitle.contains(":")) {
                                 String[] separated = currentMovieTitle.split(":");
-                                // separate[1].trim() will remove the empty space to the second string
                                 movieAdapterViewHolder.mErrorMovieNameTextView.setText(separated[0] + ":" + "\n" + separated[1].trim());
                             } else {
                                 movieAdapterViewHolder.mErrorMovieNameTextView
@@ -222,7 +189,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             final File pathToPic = new File(fullMovieFavPosterForOneMovie);
 
             Picasso.with(mainActivity)
-                    // PosterPath from external storage
                     .load(pathToPic)
                     .error(R.drawable.pic_error_loading_w370)
                     .into(movieAdapterViewHolder.mMoviePosterImageView, new Callback() {
@@ -239,7 +205,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                             String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(FavMovieEntry.COLUMN_ORIGINAL_TITLE));
                             if (currentMovieTitle.contains(":")) {
                                 String[] separated = currentMovieTitle.split(":");
-                                // separate[1].trim() will remove the empty space to the second string
                                 movieAdapterViewHolder.mErrorMovieNameTextView.setText(separated[0] + ":" + "\n" + separated[1].trim());
                             } else {
                                 movieAdapterViewHolder.mErrorMovieNameTextView
@@ -273,7 +238,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                             .concat(moviePosterForOneMovie);
 
                     Picasso.with(mainActivity)
-                            // PosterPath from web
                             .load(fullMoviePosterForOneMovie)
                             .error(R.drawable.pic_error_loading_w370)
                             .into(movieAdapterViewHolder.mMoviePosterImageView, new Callback() {
@@ -290,7 +254,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                                     String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_ORIGINAL_TITLE));
                                     if (currentMovieTitle.contains(":")) {
                                         String[] separated = currentMovieTitle.split(":");
-                                        // separate[1].trim() will remove the empty space to the second string
                                         movieAdapterViewHolder.mErrorMovieNameTextView.setText(separated[0] + ":" + "\n" + separated[1].trim());
                                     } else {
                                         movieAdapterViewHolder.mErrorMovieNameTextView
@@ -306,7 +269,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                             .concat(moviePosterForOneMovie);
 
                     Picasso.with(mainActivity)
-                            // PosterPath from web
                             .load(fullMoviePosterForOneMovie)
                             .error(R.drawable.pic_error_loading_w370)
                             .into(movieAdapterViewHolder.mMoviePosterImageView, new Callback() {
@@ -323,7 +285,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                                     String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_ORIGINAL_TITLE));
                                     if (currentMovieTitle.contains(":")) {
                                         String[] separated = currentMovieTitle.split(":");
-                                        // separate[1].trim() will remove the empty space to the second string
                                         movieAdapterViewHolder.mErrorMovieNameTextView.setText(separated[0] + ":" + "\n" + separated[1].trim());
                                     } else {
                                         movieAdapterViewHolder.mErrorMovieNameTextView
@@ -341,7 +302,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                     .concat(moviePosterForOneMovie);
 
             Picasso.with(mainActivity)
-                    // PosterPath from web
                     .load(fullMoviePosterForOneMovie)
                     .error(R.drawable.pic_error_loading_w370)
                     .into(movieAdapterViewHolder.mMoviePosterImageView, new Callback() {
@@ -358,7 +318,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                             String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(FavMovieEntry.COLUMN_ORIGINAL_TITLE));
                             if (currentMovieTitle.contains(":")) {
                                 String[] separated = currentMovieTitle.split(":");
-                                // separate[1].trim() will remove the empty space to the second string
                                 movieAdapterViewHolder.mErrorMovieNameTextView.setText(separated[0] + ":" + "\n" + separated[1].trim());
                             } else {
                                 movieAdapterViewHolder.mErrorMovieNameTextView
@@ -369,11 +328,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         }
     }
 
-    /**
-     * This method simply returns the number of items to display.
-     *
-     * @return The number of items available on the screen
-     */
+
     @Override
     public int getItemCount() {
 
@@ -387,10 +342,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         }
     }
 
-    /**
-     * This method is used to set the movie posters on a MovieAdapter from very first time of installing.
-     * Without store any information, just to display the posters fast.
-     */
+
     public void setMoviePosterData(ArrayList<String> moviePostersUrls) {
         mLoadFromDb = false;
         mMoviePostersUrlStrings.clear();
@@ -398,17 +350,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         notifyDataSetChanged();
     }
 
-    /**
-     * The interface that receives onClick messages.
-     */
+
     public interface MovieAdapterOnClickHandler {
         void onClick(Movie currentMovie);
 
     }
 
-    /**
-     * Cache of the children views for a movie poster image.
-     */
     public class MovieAdapterViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
 
         public final ImageView mMoviePosterImageView;
@@ -443,13 +390,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                     String release_date = mCursor.getString(mCursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_RELEASE_DATE));
                     String id = mCursor.getString(mCursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_ID));
 
-                    // Create a new {@link Movie} object with the poster_path, original_title,
-                    // movie_poster_image_thumbnail, a_plot_synopsis, user_rating, release_date,id
-                    // from the cursor response.
                     Movie currentMovieData = new Movie(poster_path, original_title, movie_poster_image_thumbnail
                             , a_plot_synopsis, user_rating, release_date, id);
                     mClickHandler.onClick(currentMovieData);
-                } else if ("top_rated".equals(orderBy)) {
+                } else if ("now_playing".equals(orderBy)) {
                     int adapterPosition = getAdapterPosition();
                     mCursor.moveToPosition(adapterPosition);
 
@@ -462,9 +406,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                     String release_date = mCursor.getString(mCursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_RELEASE_DATE));
                     String id = mCursor.getString(mCursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_MOVIE_ID));
 
-                    // Create a new {@link Movie} object with the poster_path, original_title,
-                    // movie_poster_image_thumbnail, a_plot_synopsis, user_rating, release_date,id
-                    // from the cursor response.
                     Movie currentMovieData = new Movie(poster_path, original_title, movie_poster_image_thumbnail
                             , a_plot_synopsis, user_rating, release_date, id);
                     mClickHandler.onClick(currentMovieData);
@@ -481,9 +422,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                     String release_date = mCursor.getString(mCursor.getColumnIndex(FavMovieEntry.COLUMN_RELEASE_DATE));
                     String id = mCursor.getString(mCursor.getColumnIndex(MovieContract.FavMovieEntry.COLUMN_MOVIE_ID));
 
-                    // Create a new {@link Movie} object with the poster_path, original_title,
-                    // movie_poster_image_thumbnail, a_plot_synopsis, user_rating, release_date,id
-                    // from the cursor response.
                     Movie currentMovieData = new Movie(poster_path, original_title, movie_poster_image_thumbnail
                             , a_plot_synopsis, user_rating, release_date, id);
                     mClickHandler.onClick(currentMovieData);
@@ -520,9 +458,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
     }
 
     private NetworkInfo getNetworkInfo() {
-        // Get a reference to the ConnectivityManager to check state of network connectivity.
         ConnectivityManager connMgr = (ConnectivityManager) mainActivity.getSystemService(Context.CONNECTIVITY_SERVICE);
-        // Get details on the currently active default data network
         return connMgr.getActiveNetworkInfo();
     }
 }

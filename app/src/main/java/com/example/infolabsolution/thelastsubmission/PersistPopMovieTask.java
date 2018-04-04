@@ -30,9 +30,6 @@ import com.example.infolabsolution.thelastsubmission.ExternalPathUtils;
 import com.example.infolabsolution.thelastsubmission.MovieJsonUtils;
 import com.example.infolabsolution.thelastsubmission.NetworkUtils;
 
-/**
- * Created by jane on 17-4-21.
- */
 public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
 
     private static final String TAG = PersistPopMovieTask.class.getSimpleName();
@@ -44,7 +41,7 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
     private static int mThumbnailUpToDateRecordNumber;
 
     private final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/";
-    private final String IMAGE_SIZE_W780 = "w780/";
+//    private final String IMAGE_SIZE_W780 = "w780/";
     private final String IMAGE_SIZE_W185 = "w185/";
     private final String CACHE_POSTERS_FOLDER_NAME = "/cacheposters/";
     private final String CACHE_THUMBNAILS_FOLDER_NAME = "/cachethumbnails/";
@@ -274,7 +271,7 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_ID));
                 if (!Arrays.asList(fileNameArray).contains(currentImageThumbnail)) {
                     Log.i(TAG, "download / filepath: download pop external image thumbnail pic:" + currentImageThumbnail);
-                    String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W780)
+                    String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
                             .concat(currentImageThumbnail);
                     new FetchExternalStoragePopMovieImageThumbnailsTask(this.context).execute(
                             new MovieBasicInfo(currentMovieId, fullMoviePosterForOneMovie));
@@ -302,7 +299,7 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
                 String currentImageThumbnail = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_POSTER_IMAGE_THUMBNAIL));
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_ID));
                 Log.i(TAG, "download / filepath: download pop external image thumbnail pic:" + currentImageThumbnail);
-                String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W780)
+                String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
                         .concat(currentImageThumbnail);
                 new FetchExternalStoragePopMovieImageThumbnailsTask(this.context).execute(
                         new MovieBasicInfo(currentMovieId, fullMoviePosterForOneMovie));

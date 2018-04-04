@@ -17,9 +17,6 @@ import com.example.infolabsolution.thelastsubmission.Trailer;
 import com.example.infolabsolution.thelastsubmission.NetworkUtils;
 import com.example.infolabsolution.thelastsubmission.TrailerJsonUtils;
 
-/**
- * Created by jane on 17-4-20.
- */
 public class FetchTrailerTask extends AsyncTask<String, Void, List<Trailer>> {
 
     DetailActivity detailActivity;

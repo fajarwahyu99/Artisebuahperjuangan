@@ -17,9 +17,6 @@ import com.example.infolabsolution.thelastsubmission.Review;
 import com.example.infolabsolution.thelastsubmission.NetworkUtils;
 import com.example.infolabsolution.thelastsubmission.ReviewJsonUtils;
 
-/**
- * Created by jane on 17-4-20.
- */
 public class FetchReviewTask extends AsyncTask<String, Void, List<Review>> {
 
     private static final String TAG = FetchReviewTask.class.getSimpleName();
@@ -41,7 +38,6 @@ public class FetchReviewTask extends AsyncTask<String, Void, List<Review>> {
 
     @Override
     protected List<Review> doInBackground(String... params) {
-        // If there's no movie id, there's no movie reviews to show.
         if (params.length == 0) {
             return null;
         }

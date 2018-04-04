@@ -1,9 +1,5 @@
 package com.example.infolabsolution.thelastsubmission;
 
-/**
- * Created by jane on 17-8-30.
- */
-
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -24,23 +20,11 @@ import com.example.infolabsolution.thelastsubmission.MovieContract.CacheMovieMos
 import com.example.infolabsolution.thelastsubmission.Movie;
 import com.example.infolabsolution.thelastsubmission.DetailActivity;
 
-/**
- * Utility class for creating watch movie (at a specific time) notification
- */
 public class WatchMovieNotificationUtils {
 
     private static final String TAG = WatchMovieNotificationUtils.class.getSimpleName();
 
-    /*
-     * This notification ID can be used to access our notification after we've displayed it. This
-     * can be handy when we need to cancel the notification, or perhaps update it. This number is
-     * arbitrary and can be set to whatever you like. 135 is in no way significant.
-     */
     private static final int WATCH_MOVIE_NOTIFICATION_ID = 1135;
-
-    /**
-     * This pending intent id is used to uniquely reference the pending intent
-     */
     private static final int WATCH_MOVIE_PENDING_INTENT_ID = 3577;
 
     public static void clearAllNotifications(Context context) {
@@ -74,8 +58,6 @@ public class WatchMovieNotificationUtils {
 
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        /* WATCH_MOVIE_NOTIFICATION_ID allows you to update or cancel the notification later on */
         notificationManager.notify(WATCH_MOVIE_NOTIFICATION_ID, notificationBuilder.build());
     }
 
@@ -92,7 +74,6 @@ public class WatchMovieNotificationUtils {
                 null);
 
         if (cursor != null && cursor.getCount() > 0) {
-            // I only want the first cursor, which is the highest rate pop movie.
             cursor.moveToFirst();
 
             String poster_path = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_POSTER_PATH));

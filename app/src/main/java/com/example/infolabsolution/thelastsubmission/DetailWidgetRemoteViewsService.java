@@ -18,17 +18,10 @@ import com.example.infolabsolution.thelastsubmission.MovieContract.CacheMovieMos
 import com.example.infolabsolution.thelastsubmission.MovieContract.CacheMovieTopRatedEntry;
 import com.example.infolabsolution.thelastsubmission.Movie;
 
-/**
- * Created by jane on 17-8-28.
- */
 
-/**
- * RemoteViewsService controlling the data being shown in the scrollable weather detail widget
- */
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class DetailWidgetRemoteViewsService extends RemoteViewsService {
 
-    // these indices must match the projection
     static final int INDEX_MOVIE_AUTO_ID = 0;
     static final int INDEX_MOVIE_POSTER_PATH = 1;
     static final int INDEX_ORIGINAL_TITLE = 2;
@@ -78,7 +71,7 @@ public class DetailWidgetRemoteViewsService extends RemoteViewsService {
                             null,
                             null);
 
-                } else if ("top_rated".equals(orderBy)) {
+                } else if ("now_playing".equals(orderBy)) {
                     String[] movieColumns = {
                             CacheMovieTopRatedEntry._ID,
                             CacheMovieTopRatedEntry.COLUMN_POSTER_PATH,

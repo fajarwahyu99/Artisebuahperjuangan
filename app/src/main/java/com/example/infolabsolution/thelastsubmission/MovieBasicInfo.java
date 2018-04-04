@@ -1,8 +1,5 @@
 package com.example.infolabsolution.thelastsubmission;
 
-/**
- * Created by jane on 17-6-17.
- */
 
 public class MovieBasicInfo {
 

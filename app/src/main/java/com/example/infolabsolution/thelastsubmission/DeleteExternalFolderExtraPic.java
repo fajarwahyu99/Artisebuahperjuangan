@@ -11,9 +11,6 @@ import com.example.infolabsolution.thelastsubmission.MovieContract.CacheMovieMos
 import com.example.infolabsolution.thelastsubmission.MovieContract.CacheMovieTopRatedEntry;
 import com.example.infolabsolution.thelastsubmission.MovieContract.FavMovieEntry;
 
-/**
- * Created by jane on 17-7-19.
- */
 
 public class DeleteExternalFolderExtraPic {
 

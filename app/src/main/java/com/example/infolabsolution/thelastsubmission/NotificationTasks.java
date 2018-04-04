@@ -3,9 +3,6 @@ package com.example.infolabsolution.thelastsubmission;
 import android.content.Context;
 import android.util.Log;
 
-/**
- * Created by jane on 17-8-30.
- */
 
 public class NotificationTasks {
 

@@ -17,6 +17,7 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
@@ -124,58 +125,27 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         String titleOrderBy = getOrderByPreference();
         if ("upcoming".equals(titleOrderBy)) {
             setTitle(getString(R.string.main_activity_title_most_popular));
-        } else if ("top_rated".equals(titleOrderBy)) {
+        } else if ("now_playing".equals(titleOrderBy)) {
             setTitle(getString(R.string.main_activity_title_top_rated));
         } else {
             setTitle(getString(R.string.main_activity_title_favorite));
         }
 
-        /**
-         * Using findViewById, get a reference to the RecyclerView from xml.
-         */
         mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview_movieposters);
-
-        /**
-         * This TextView is used to display errors and will be hidden if there are no errors.
-         */
         mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
 
-        /**
-         * this: Current context, will be used to access resources.
-         * 4: The number of columns in the grid
-         * GridLayoutManager.VERTICAL: Layout orientation.
-         * false: When set to true, layouts from end to start.
-         */
         final GridLayoutManager layoutManager
-                = new GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false);
+                = new GridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
 
         mRecyclerView.setLayoutManager(layoutManager);
-
-        /**
-         * Use this setting to improve performance that changes in content do not change the child
-         * layout size in the RecyclerView.
-         */
         mRecyclerView.setHasFixedSize(true);
-
-        /**
-         * The MovieAdapter is responsible for linking the movie posters data with the Views that
-         * will end up displaying the posters data.
-         */
         if (mMovieAdapter == null) {
             mMovieAdapter = new MovieAdapter(this, this);
         }
-
-        /**
-         * Setting the adapter attaches it to the RecyclerView in the layout.
-         */
         mRecyclerView.setAdapter(mMovieAdapter);
 
-        /**
-         * The ProgressBar that will indicate to the user that we are loading data. It will be
-         * hidden when no data is loading.
-         */
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
         mSwipeRefreshLayout.setOnRefreshListener(
@@ -187,17 +157,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
                     }
                 }
         );
-
-        // Change swipeRefreshLayout 's loading indicator background color.
         int swipeRefreshBgColor = ContextCompat.getColor(this, R.color.colorPrimaryDark);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(swipeRefreshBgColor);
-
-        // Change swipeRefreshLayout 's loading indicator loading circle color.
-        // You can have as many as colors you want.
         mSwipeRefreshLayout.setColorSchemeResources(
-                // if the loading is fast, it shows white from the beginning and finish
                 R.color.colorWhiteFavoriteStar,
-                // if the loading is slow, it shows different blue
                 R.color.trailer10,
                 R.color.trailer9,
                 R.color.trailer8,
@@ -222,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
                 new FetchMoviePostersTask(this).execute(orderBy);
                 new PersistPopMovieTask(this).execute();
                 initCursorLoader();
-            } else if ("top_rated".equals(orderBy)) {
+            } else if ("now_playing".equals(orderBy)) {
                 orderBy = "movie/" + orderBy;
                 new FetchMoviePostersTask(this).execute(orderBy);
                 new PersistTopMovieTask(this).execute();
@@ -262,9 +225,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
         setUpAlarm();
 
-        // To get a notification right now.
-        // For test Only
-        // PopBestMovieNotificationUtils.notifyUserHighestRatePopularMovie(this);
     }
 
     private void setUpAlarm() {
@@ -275,12 +235,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         alarmIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
 
         Calendar scheduledCalendar = Calendar.getInstance();
-        scheduledCalendar.set(Calendar.YEAR, 2017);
-        // 0 is for January. So September is 8. Or use Calendar.SEPTEMBER, that's better.
-        scheduledCalendar.set(Calendar.MONTH, Calendar.SEPTEMBER);
-        scheduledCalendar.set(Calendar.DATE, 7);
-        scheduledCalendar.set(Calendar.HOUR_OF_DAY, 12);
-        scheduledCalendar.set(Calendar.MINUTE, 37);
+        scheduledCalendar.set(Calendar.YEAR, 2018);
+        scheduledCalendar.set(Calendar.MONTH, Calendar.APRIL);
+        scheduledCalendar.set(Calendar.DATE, 4);
+        scheduledCalendar.set(Calendar.HOUR_OF_DAY, 11);
+        scheduledCalendar.set(Calendar.MINUTE, 26);
         scheduledCalendar.set(Calendar.SECOND, 0);
 
         Calendar current = Calendar.getInstance();
@@ -289,7 +248,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         }
     }
 
-    // N == api 24
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void scheduleUpdatePopMovieJob() {
         Log.i(TAG, "Scheduling fetch pop movie job.");
@@ -306,7 +264,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     }
 
 
-    // N == api 24
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void scheduleUpdateTopMovieJob() {
         Log.i(TAG, "Scheduling fetch top movie job.");
@@ -338,7 +295,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         }
     }
 
-    // N == api 24
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void scheduleDeleteExtraPic() {
         Log.i(TAG, "Scheduling delete extra pic job.");
@@ -353,7 +309,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         }
     }
 
-    // N == api 24
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void scheduleUpdateWidgetJob() {
         Log.i(TAG, "Scheduling update widget job.");
@@ -368,7 +323,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         }
     }
 
-    // N == api 24
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void scheduleNotificationJob() {
         Log.i(TAG, "Scheduling notification job.");
@@ -392,7 +346,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
                 new FetchMoviePostersTask(this).execute(orderBy);
                 new PersistPopMovieTask(this).execute();
                 initCursorLoader();
-            } else if ("top_rated".equals(orderBy)) {
+            } else if ("now_playing".equals(orderBy)) {
                 orderBy = "movie/" + orderBy;
                 new FetchMoviePostersTask(this).execute(orderBy);
                 new PersistTopMovieTask(this).execute();
@@ -422,7 +376,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         String orderBy = getOrderByPreference();
         if ("upcoming".equals(orderBy)) {
             titleCode = POPULAR_PIC_TITLE_CODE;
-        } else if ("top_rated".equals(orderBy)) {
+        } else if ("now_playing".equals(orderBy)) {
             titleCode = TOPRATED_PIC_TITLE_CODE;
         } else {
             titleCode = FAVORITE_PIC_TITLE_CODE;
@@ -433,10 +387,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         getLoaderManager().initLoader(MOVIE_LOADER, null, this);
     }
 
-    /**
-     * This method is overridden by the MainActivity class in order to handle RecyclerView item
-     * clicks.
-     */
+
     @Override
     public void onClick(Movie movie) {
         Context context = this;
@@ -446,30 +397,15 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         startActivity(intentToStartDetailActivity);
     }
 
-    /**
-     * This method will make the View for the movie data visible and
-     * hide the error message
-     * <p>
-     * Since it is okay to redundantly set the visibility of a View, we don't
-     * need to check whether each view is currently visible or invisible.
-     */
     public void showMovieDataView() {
-        // First, make sure the error is invisible.
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
-        // Then, make sure the movie data is visible.
+
         mRecyclerView.setVisibility(View.VISIBLE);
     }
 
-    /**
-     * This method will make the error message visible and hide the movie data View.
-     * <p>
-     * Since it is okay to redundantly set the visibility of a View, we don't
-     * need to check whether each view is currently visible or invisible.
-     */
     public void showErrorMessage() {
-        // First, hide the currently visible data.
+
         mRecyclerView.setVisibility(View.INVISIBLE);
-        // Then, show the error.
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
@@ -504,8 +440,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            // Have a refresh menu button to perform the refresh again, in case some device or some
-            // users cannot perform swipe to refresh.
             case R.id.action_refresh:
                 mLoadingIndicator.setVisibility(View.VISIBLE);
                 refreshMovie();
@@ -513,6 +447,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             case R.id.action_settings:
                 Intent settingIntent = new Intent(this, SettingsActivity.class);
                 startActivity(settingIntent);
+                return true;
+            case R.id.action_language:
+                Intent mIntent = new Intent(Settings.ACTION_LOCALE_SETTINGS);
+                startActivity(mIntent);
                 return true;
             case R.id.action_delete_all:
                 showDeleteConfirmationDialog();
@@ -561,8 +499,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         }
         cursor.close();
 
-        // After user deleted/unliked all movies, they won't trigger initLoader, but the widget
-        // should change, so we need to send a broadcase here after deleting all.
         Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
         this.sendBroadcast(dataUpdatedIntent);
     }
@@ -580,7 +516,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
                     null,
                     null,
                     null);
-        } else if ("top_rated".equals(orderBy)) {
+        } else if ("now_playing".equals(orderBy)) {
             return new CursorLoader(
                     this,
                     CacheMovieTopRatedEntry.CONTENT_URI,
@@ -616,16 +552,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             String orderBy = getOrderByPreference();
 
             if ("upcoming".equals(orderBy)) {
-                // Because we only fetch data when there is network, if there is no network, we load
-                // movie data from database. so this message will only happen when users open the app
-                // for the first time without network (no data in database).
-                // We will display "Please check your network connection."
+
                 mErrorMessageDisplay.setText(getString(R.string.error_message_no_popular_movie));
-            } else if ("top_rated".equals(orderBy)) {
-                // Because we only fetch data when there is network, if there is no network, we load
-                // movie data from database. so this message will only happen when users open the app
-                // for the first time without network (no data in database).
-                // We will display "Please check your network connection."
+            } else if ("now_playing".equals(orderBy)) {
+
                 mErrorMessageDisplay.setText(getString(R.string.error_message_no_top_rated_movie));
             } else {
                 mErrorMessageDisplay.setText(getString(R.string.error_message_no_fav_movie));
@@ -635,8 +565,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     private void hideLoadingIndicators() {
         mLoadingIndicator.setVisibility(View.INVISIBLE);
-        // this setRefreshing method is controlling the visible or invisible of the loading
-        // indicator of the swipeRefreshlayout
+
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
@@ -659,36 +588,28 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     }
 
     private NetworkInfo getNetworkInfo() {
-        // Get a reference to the ConnectivityManager to check state of network connectivity.
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        // Get details on the currently active default data network
+
         return connMgr.getActiveNetworkInfo();
     }
 
-    /**
-     * Prompt the user to confirm that they want to delete all movies.
-     */
+
     private void showDeleteConfirmationDialog() {
-        // Create an AlertDialog.Builder and set the message, and click listeners
-        // for the positive and negative buttons on the dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.delete_all_dialog_msg);
         builder.setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Delete" button, so delete all movies.
                 deleteAllMovies();
             }
         });
         builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
-                // User clicked the "Cancel" button, so dismiss the dialog
                 if (dialog != null) {
                     dialog.dismiss();
                 }
             }
         });
 
-        // Create and show the AlertDialog
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
     }

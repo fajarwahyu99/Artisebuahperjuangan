@@ -53,9 +53,7 @@ import com.example.infolabsolution.thelastsubmission.TrailerAdapter;
 import com.example.infolabsolution.thelastsubmission.TrailerAdapter.TrailerAdapterOnClickHandler;
 import com.example.infolabsolution.thelastsubmission.ExternalPathUtils;
 
-/**
- * Created by jane on 3/1/17.
- */
+
 
 public class DetailActivity extends AppCompatActivity implements TrailerAdapterOnClickHandler {
 
@@ -96,13 +94,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
     private List<Trailer> mCurrentMovieTrailers;
 
-    /*****************************************************************************************************
-     * mCurrentMovieReviews == null , mCurrentMovieTrailers == null : Haven't loaded yet.                *
-     * (slow internet speed).                                                                            *
-     * mCurrentMovieReviews.size() == 0 , mCurrentMovieTrailers.size() == 0 : No reviews or no trailers. *
-     * (Loaded finished successfully.)                                                                   *
-     *****************************************************************************************************/
-
     private RecyclerView mReviewRecyclerView;
 
     private RecyclerView mTrailerRecyclerView;
@@ -121,18 +112,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
     private ProgressBar mLoadingIndicator;
 
-    /**
-     * Movie Database helper that will provide access to the movie database
-     */
     private MovieDbHelper mMovieDbHelper;
 
-    /**
-     * This field is used for data binding. Normally, we would have to call findViewById many
-     * times to get references to the Views in this Activity. With data binding however, we only
-     * need to call DateBindingUtil.setContentView and pass in a Context and a layout, as we do
-     * in onCreate of this class. Then, we can access all of the Views in our layout
-     * programmatically without cluttering up the code with findViewById.
-     */
     private ActivityDetailBinding mDetailBinding;
 
     private Toast mToast;
@@ -186,11 +167,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         mDetailBinding = DataBindingUtil.setContentView(this, R.layout.activity_detail);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh);
-
-        /**
-         * The ProgressBar that will indicate to the user that we are loading data. It will be
-         * hidden when no data is loading.
-         */
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
         Intent intentThatStartedThisActivity = getIntent();
@@ -199,32 +175,19 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 mCurrentMovie = (Movie) getIntent().getExtras().getSerializable("movie");
             }
         }
-
-        // Set current movie original title on the detail activity menu bar as activity's title.
         setTitle(mCurrentMovie.getOriginalTitle());
-
-        // Those animation is a substitute for Picasso's placeholder.
         Animation a = AnimationUtils.loadAnimation(this, R.anim.progress_animation_main);
         a.setDuration(1000);
         mDetailBinding.primaryInfo.ivLoading.startAnimation(a);
 
-        /**
-         * While online, picasso load url string which starts with "http://";
-         * While offline, picasso load file path on external storage which starts with "/storage"
-         */
         NetworkInfo networkInfo = getNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             setCurrentMovieImageThumbnailOnLine();
         } else {
             setCurrentMovieImageThumbnailOffLine();
         }
-
-        // Set current movie textViews content
-        // Some movies' original title is too long to display fully on the action bar, so we need to
-        // repeat it again in the detail page.
         if (mCurrentMovie.getOriginalTitle().contains(":")) {
             String[] separated = mCurrentMovie.getOriginalTitle().split(":");
-            // separate[1].trim() will remove the empty space to the second string
             mDetailBinding.primaryInfo.tvMovieTitle.setText(separated[0] + ":" + "\n" + separated[1].trim());
         } else {
             mDetailBinding.primaryInfo.tvMovieTitle.setText(mCurrentMovie.getOriginalTitle());
@@ -232,22 +195,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         mDetailBinding.primaryInfo.tvUserRating.setText(mCurrentMovie.getUserRating());
         mDetailBinding.primaryInfo.tvReleaseDate.setText(mCurrentMovie.getReleaseDate());
         mDetailBinding.primaryInfo.tvAPlotSynopsis.setText(mCurrentMovie.getAPlotSynopsis());
-
-        // To access the database, instantiate the subclass of SQLiteOpenHelper
-        // and pass the context, which is the current activity.
         mMovieDbHelper = new MovieDbHelper(this);
 
-         /*
-         * A LinearLayoutManager is responsible for measuring and positioning item views within a
-         * RecyclerView into a linear list. This means that it can produce either a horizontal or
-         * vertical list depending on which parameter you pass in to the LinearLayoutManager
-         * constructor. In our case, we want a vertical list, so we pass in the constant from the
-         * LinearLayoutManager class for vertical lists, LinearLayoutManager.VERTICAL.
-         *
-         * The third parameter (shouldReverseLayout) should be true if you want to reverse your
-         * layout. Generally, this is only true with horizontal lists that need to support a
-         * right-to-left layout.
-         */
         LinearLayoutManager layoutManagerReviews = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
                 false);
 
@@ -255,20 +204,9 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
         mReviewRecyclerView.setLayoutManager(layoutManagerReviews);
 
-        /**
-         * The ReviewAdapter is responsible for linking the reviews data with the Views that
-         * will end up displaying the reviews data.
-         */
         mReviewAdapter = new ReviewAdapter();
-
-        /**
-         * Setting the adapter attaches it to the Review RecyclerView in the layout.
-         */
         mReviewRecyclerView.setAdapter(mReviewAdapter);
 
-        /**
-         * Once all of the views are setup, review data can be load.
-         */
         loadReviewData(mCurrentMovie.getId());
 
         LinearLayoutManager layoutManagerTrailers = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
@@ -277,37 +215,19 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         mTrailerRecyclerView = mDetailBinding.extraDetails.recyclerviewMovieTrailers;
 
         mTrailerRecyclerView.setLayoutManager(layoutManagerTrailers);
-
-        /**
-         * The TrailerAdapter is responsible for linking the trailers data with the Views that
-         * will end up displaying the trailers data.
-         */
         mTrailerAdapter = new TrailerAdapter(this, this);
 
-        /**
-         * Setting the adapter attaches it to the Trailer RecyclerView in the layout.
-         */
         mTrailerRecyclerView.setAdapter(mTrailerAdapter);
-
-        /**
-         * Once all of the views are setup, trailer data can be load.
-         */
         loadTrailerData(mCurrentMovie.getId());
-
-        // set ContentDescription for every image thumbnail in detail activity
         mDetailBinding.primaryInfo.ivMoviePosterImageThumbnail.setContentDescription(mCurrentMovie.getOriginalTitle());
-
-        // Setup fab_favorite to add favorite movies into database and change FAB color to yellow
         View primaryLayout = findViewById(R.id.primary_info);
         mFabButton = (FloatingActionButton) primaryLayout.findViewById(R.id.fab_favorite);
 
         mFabButton.setColorFilter(ContextCompat.getColor(DetailActivity.this, setFabButtonStarColor()));
 
         if (setFabButtonStarColor() == R.color.colorWhiteFavoriteStar) {
-            // set ContentDescription for fab button
             mFabButton.setContentDescription(getString(R.string.a11y_detail_activity_save_floating_button));
         } else {
-            // set ContentDescription for fab button
             mFabButton.setContentDescription(getString(R.string.a11y_detail_activity_unsave_floating_button));
         }
 
@@ -339,17 +259,11 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                     }
                 }
         );
-
-        // Change swipeRefreshLayout 's loading indicator background color.
         int swipeRefreshBgColor = ContextCompat.getColor(this, R.color.colorPrimaryDark);
         mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(swipeRefreshBgColor);
 
-        // Change swipeRefreshLayout 's loading indicator loading circle color.
-        // You can have as many as colors you want.
         mSwipeRefreshLayout.setColorSchemeResources(
-                // if the loading is fast, it shows white from the beginning and finish
                 R.color.colorWhiteFavoriteStar,
-                // if the loading is slow, it shows different blue
                 R.color.trailer10,
                 R.color.trailer9,
                 R.color.trailer8,
@@ -416,13 +330,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
             mToast.show();
         }
     }
-
-    /**
-     * This method will use the pass in movie id to either tell the background method to get the
-     * movie review data in the background or load the review data from the database.
-     *
-     * @param id The id of the movie clicked.
-     */
     private void loadReviewData(String id) {
         try {
             boolean movieIsInDatabase = checkIsMovieAlreadyInFavDatabase(id);
@@ -438,7 +345,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 }
             }
         } catch (NullPointerException e) {
-            Log.e(TAG, e.getMessage());
         }
     }
 
@@ -447,17 +353,10 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    /**
-     * This method will use the pass in movie id to either tell the background method to get the
-     * movie trailer data in the background or load the trailer data from the database.
-     *
-     * @param id The id of the movie clicked.
-     */
     private void loadTrailerData(String id) {
 
         try {
             boolean movieIsInDatabase = checkIsMovieAlreadyInFavDatabase(id);
-            // When saved offline, trailers haven't loaded yet.
             if (movieIsInDatabase) {
                 loadTrailerDataFromDatabase(id);
             } else {
@@ -470,14 +369,12 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 }
             }
         } catch (NullPointerException e) {
-            Log.e(TAG, e.getMessage());
         }
     }
 
     public void setTrailersLoadingIndicator() {
         mDetailBinding.extraDetails.tvNumberOfTrailer.setVisibility(View.INVISIBLE);
         mDetailBinding.extraDetails.ivTrailerLoadingIndicator.setVisibility(View.VISIBLE);
-        // Trailers Loading Animation
         Animation b = AnimationUtils.loadAnimation(this, R.anim.progress_animation_main);
         b.setDuration(1000);
         mDetailBinding.extraDetails.ivTrailerLoadingIndicator.startAnimation(b);
@@ -505,15 +402,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         mDetailBinding.extraDetails.tvNumberOfUserReview.setText(numberOfReviewTextViewText);
     }
 
-    /**
-     * This method is overridden by the DetailActivity class in order to handle RecyclerView item
-     * clicks.
-     * <p>
-     * Props for supporting the YouTube app if it's available, and falling back to the web browser
-     * if necessary.
-     *
-     * @param trailerSourceKey The current trailerSourceKey that was clicked
-     */
     @Override
     public void onClick(String trailerSourceKey) {
         NetworkInfo networkInfo = getNetworkInfo();
@@ -536,9 +424,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         }
     }
 
-    /**
-     * Save movie, review and trailer into database.
-     */
     private void saveMovie() {
         NetworkInfo networkInfo = getNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
@@ -637,11 +522,9 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         }
     }
 
-    /**
-     * Delete movie, review and trailer from database.
-     */
+
     private void deleteMovie() {
-        // Happens when movie was saved when offline. So reviews and trailers are both null.
+
         if (mCurrentMovieReviews == null && mCurrentMovieTrailers == null) {
             deleteFavoriteMovie();
             if (mToast != null) {
@@ -657,7 +540,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 mToast.show();
             }
         } else {
-            // Happens when movie was saved when online. So reviews and trailers couldn't be null.
             if (mCurrentMovieReviews != null && mCurrentMovieReviews.size() > 0) {
                 if (mCurrentMovieTrailers != null && mCurrentMovieTrailers.size() > 0) {
                     deleteFavoriteMovie();
@@ -734,13 +616,9 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         }
     }
 
-    /**
-     * Save movie into database.
-     */
+
     public void saveFavoriteMovie() {
 
-        // Create a ContentValues object where column names are the keys, and current movie
-        // attributes are the values.
         ContentValues values = new ContentValues();
         values.put(FavMovieEntry.COLUMN_POSTER_PATH, mCurrentMovie.getPosterPath());
         values.put(FavMovieEntry.COLUMN_ORIGINAL_TITLE, mCurrentMovie.getOriginalTitle());
@@ -753,10 +631,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         Log.i(TAG, "number of reviews: " + mNumberOfReviewString);
         values.put(FavMovieEntry.COLUMN_NUMBER_OF_TRAILERS, mNumberOfTrailerString);
 
-        // Insert a new movie into the provider, returning the content URI for the new movie.
         Uri newUri = getContentResolver().insert(FavMovieEntry.CONTENT_URI, values);
 
-        // Show a log message depending on whether or not the insertion was successful
         if (newUri == null) {
             saveMovieRecordNumber = SAVE_MOVIE_FAIL;
             Log.e(TAG, getString(R.string.insert_movie_movie_failed));
@@ -766,9 +642,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         }
     }
 
-    /**
-     * Save review into database.
-     */
+
     public void saveFavoriteReview() {
 
         for (int i = 0; i < Integer.valueOf(mNumberOfReviewString); i++) {
@@ -789,9 +663,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         }
     }
 
-    /**
-     * Save trailer into database.
-     */
+
     public void saveFavoriteTrailer() {
 
         for (int i = 0; i < Integer.valueOf(mNumberOfTrailerString); i++) {
@@ -811,9 +683,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         }
     }
 
-    /**
-     * Delete movie from database.
-     */
+
     private void deleteFavoriteMovie() {
         String selection = FavMovieEntry.COLUMN_MOVIE_ID + "=?";
         String[] selectionArgs = {mCurrentMovie.getId()};
@@ -828,9 +698,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         }
     }
 
-    /**
-     * Delete review from database.
-     */
     private void deleteFavoriteReview() {
         String selection = ReviewEntry.COLUMN_MOVIE_ID + "=?";
         String[] selectionArgs = {mCurrentMovie.getId()};
@@ -849,9 +716,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         }
     }
 
-    /**
-     * Delete trailer from database
-     */
+
     private void deleteFavoriteTrailer() {
         String selection = TrailerEntry.COLUMN_MOVIE_ID + "=?";
         String[] selectionArgs = {mCurrentMovie.getId()};
@@ -872,15 +737,12 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
     public void loadReviewDataFromDatabase(String movieId) {
         setReviewsLoadingIndicator();
-        // Create an empty ArrayList that can start adding reviews to
         List<Review> reviews = new ArrayList<>();
         String selection = ReviewEntry.COLUMN_MOVIE_ID + "=?";
         String[] selectionArgs = {movieId};
-        // Perform a query on the provider using the ContentResolver.
-        // Use the {@link ReviewEntry#CONTENT_URI} to access the review data.
         Cursor cursor = getContentResolver().query(
-                ReviewEntry.CONTENT_URI,    // The content URI of the movie table
-                null,                       // The columns to return for each row
+                ReviewEntry.CONTENT_URI,
+                null,
                 selection,
                 selectionArgs,
                 null);
@@ -890,11 +752,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 String author = cursor.getString(cursor.getColumnIndex(ReviewEntry.COLUMN_AUTHOR));
                 String review_content = cursor.getString(cursor.getColumnIndex(ReviewEntry.COLUMN_REVIEW_CONTENT));
 
-                // Create a new {@link Review} object with the author and review_content
-                // from the cursor response.
                 Review review = new Review(author, review_content);
 
-                // Add the new {@link Review} to the list of movies.
                 reviews.add(review);
                 cursor.moveToNext();
             }
@@ -904,17 +763,10 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 hideLoadingIndicators();
                 mCurrentMovieReviews = reviews;
                 mReviewAdapter.setReviewData(reviews);
-                // Display total number of reviews in the detail activity, because some movies does
-                // not have reviews.
                 mNumberOfReviewString = Integer.toString(mReviewAdapter.getItemCount());
                 setNumberOfReviewTextViewText(mNumberOfReviewString);
             }
         } else {
-            /************************************************************************************************
-             * This block of code's function:                                                               *
-             * when saved offline without fetching reviews and trailers,                                    *
-             * but open this movie when online, refetch reviews and trailers online inside of showing 0. *
-             ************************************************************************************************/
             NetworkInfo networkInfo = getNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
                 new FetchReviewTask(this).execute(movieId);
@@ -976,11 +828,6 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 setNumberOfTrailerTextViewText(mNumberOfTrailerString);
             }
         } else {
-            /************************************************************************************************
-             * This block of code's function:                                                               *
-             * when saved offline without fetching reviews and trailers,                                    *
-             * but open this movie when online, refetch reviews and trailers online inside of showing 0. *
-             ************************************************************************************************/
             NetworkInfo networkInfo = getNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
                 new FetchTrailerTask(this).execute(movieId);
@@ -1105,9 +952,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
     }
 
     private NetworkInfo getNetworkInfo() {
-        // Get a reference to the ConnectivityManager to check state of network connectivity.
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        // Get details on the currently active default data network
         return connMgr.getActiveNetworkInfo();
     }
 }

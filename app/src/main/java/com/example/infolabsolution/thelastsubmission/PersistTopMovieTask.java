@@ -30,9 +30,6 @@ import com.example.infolabsolution.thelastsubmission.ExternalPathUtils;
 import com.example.infolabsolution.thelastsubmission.MovieJsonUtils;
 import com.example.infolabsolution.thelastsubmission.NetworkUtils;
 
-/**
- * Created by jane on 17-4-21.
- */
 public class PersistTopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
 
     private static final String TAG = PersistTopMovieTask.class.getSimpleName();
@@ -63,9 +60,9 @@ public class PersistTopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
     @Override
     protected List<Movie> doInBackground(Void... params) {
 
-        Log.i(TAG, "Halloooooooooo, jag ar pa top vag.");
+//        Log.i(TAG, "Halloooooooooo, jag ar pa top vag.");
 
-        URL movieRequestUrl = NetworkUtils.buildUrl("movie/" + "top_rated");
+        URL movieRequestUrl = NetworkUtils.buildUrl("movie/" + "now_playing");
 
         try {
             String jsonMovieResponse = NetworkUtils
@@ -85,7 +82,6 @@ public class PersistTopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
 
         if (movieData != null) {
 
-            // When latest movie data fetches, delete CacheMovieTopRatedTable
             this.context.getContentResolver().delete(
                     CacheMovieTopRatedEntry.CONTENT_URI,
                     null,

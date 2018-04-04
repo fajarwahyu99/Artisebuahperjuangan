@@ -14,10 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.example.infolabsolution.thelastsubmission.R;
 
-/**
- * Created by jane on 3/1/17.
- */
-
 public class SettingsActivity extends AppCompatActivity {
 
     @Override
@@ -26,7 +22,6 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.settings_activity_main);
     }
 
-    // on Back Button pressed, restart mainActivity, back button acting like the up/home button.
     @Override
     public void onBackPressed() {
         Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
@@ -41,12 +36,8 @@ public class SettingsActivity extends AppCompatActivity {
 
             PreferenceScreen prefScreen = getPreferenceScreen();
             int count = prefScreen.getPreferenceCount();
-
-            // Go through all of the preferences, and set up their preference summary.
             for (int i = 0; i < count; i++) {
                 Preference p = prefScreen.getPreference(i);
-                // You don't need to set up preference summaries for checkbox preferences because
-                // they are already set up in xml using summaryOff and summary On
                 if (!(p instanceof CheckBoxPreference)) {
                     Preference orderBy = findPreference(getString(R.string.settings_order_by_key));
                     bindPreferenceSummaryToValue(orderBy);

@@ -1,8 +1,5 @@
 package com.example.infolabsolution.thelastsubmission;
 
-/**
- * Created by jane on 17-8-30.
- */
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -25,20 +22,8 @@ import com.example.infolabsolution.thelastsubmission.Movie;
 import com.example.infolabsolution.thelastsubmission.DetailActivity;
 import com.example.infolabsolution.thelastsubmission.MainActivity;
 
-/**
- * Utility class for creating notification
- */
 public class PopBestMovieNotificationUtils {
-
-    /*
-     * This notification ID can be used to access our notification after we've displayed it. This
-     * can be handy when we need to cancel the notification, or perhaps update it. This number is
-     * arbitrary and can be set to whatever you like. 135 is in no way significant.
-     */
     private static final int HIGHEST_RATE_POP_MOVIE_NOTIFICATION_ID = 135;
-    /**
-     * This pending intent id is used to uniquely reference the pending intent
-     */
     private static final int HIGHEST_RATE_POP_MOVIE_PENDING_INTENT_ID = 357;
     private static final int ACTION_GO_TO_PAGE_PENDING_INTENT_ID = 579;
     private static final int ACTION_IGNORE_PENDING_INTENT_ID = 7911;
@@ -78,7 +63,6 @@ public class PopBestMovieNotificationUtils {
         NotificationManager notificationManager = (NotificationManager)
                 context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        /* HIGHEST_RATE_POP_MOVIE_NOTIFICATION_ID allows you to update or cancel the notification later on */
         notificationManager.notify(HIGHEST_RATE_POP_MOVIE_NOTIFICATION_ID, notificationBuilder.build());
     }
 
@@ -96,7 +80,6 @@ public class PopBestMovieNotificationUtils {
                 sortOrder);
 
         if (cursor != null && cursor.getCount() > 0) {
-            // I only want the first cursor, which is the highest rate pop movie.
             cursor.moveToFirst();
 
             String poster_path = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_POSTER_PATH));

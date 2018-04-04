@@ -1,8 +1,6 @@
 package com.example.infolabsolution.thelastsubmission;
 
-/**
- * Created by jane on 17-4-10.
- */
+
 
 import android.content.Context;
 import android.content.res.ColorStateList;
@@ -18,9 +16,6 @@ import java.util.List;
 
 import com.example.infolabsolution.thelastsubmission.R;
 
-/**
- * Exposes a list of current movie trailers to a {@link RecyclerView}.
- */
 public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerAdapterViewHolder> {
 
     private List<Trailer> mTrailerData;
@@ -29,29 +24,15 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
 
     private Context mContext;
 
-    // Add On-click handler that defined to make it easy for an Activity to interface with the RecyclerView
     private final TrailerAdapterOnClickHandler mClickHandler;
 
-    /**
-     * Creates a TrailerAdapter.
-     *
-     * @param clickHandler The on-click handler for this adapter. This single handler is called
-     *                     when an item is clicked.
-     */
+
     public TrailerAdapter(TrailerAdapterOnClickHandler clickHandler, Context context) {
         mClickHandler = clickHandler;
         mContext = context;
     }
 
-    /**
-     * This gets called when each new ViewHolder is created. This happens when the RecyclerView
-     * is laid out. Enough ViewHolders will be created to fill the screen and allow for scrolling.
-     *
-     * @param viewGroup The ViewGroup that these ViewHolders are contained within.
-     * @param viewType  If RecyclerView has more than one type of item (which this one don't)
-     *                  this viewType can be used to provide a different layout.
-     * @return A new ReviewAdapterViewHolder that holds the View for each list item
-     */
+
     @Override
     public TrailerAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         Context context = viewGroup.getContext();
@@ -63,31 +44,17 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
         return new TrailerAdapterViewHolder(view);
     }
 
-    /**
-     * OnBindViewHolder is called by the RecyclerView to display the data at the specified
-     * position. In this method, update the contents of the ViewHolder to display the different
-     * background color for each particular position, using the "position" argument that
-     * is conveniently passed in.
-     *
-     * @param trailerAdapterViewHolder The ViewHolder which should be updated to represent the
-     *                                 contents of the item at the given position in the data set.
-     * @param position                 The position of the item within the adapter's data set.
-     */
+
     @Override
     public void onBindViewHolder(TrailerAdapterViewHolder trailerAdapterViewHolder, int position) {
         int currentColor = getTrailerFabBackgroundColor(position);
         trailerAdapterViewHolder.mPlayTrailerFab.setBackgroundTintList(ColorStateList
                 .valueOf(currentColor));
-        // set ContentDescription for trailer fab button
         int trailerNumber = position + 1;
         trailerAdapterViewHolder.mPlayTrailerFab.setContentDescription(mContext.getString(R.string.a11y_trailer_fab_button) + trailerNumber);
     }
 
-    /**
-     * This method simply returns the number of items to display.
-     *
-     * @return The number of items available on the trailer section.
-     */
+
     @Override
     public int getItemCount() {
         if (mTrailerData == null) {
@@ -96,11 +63,7 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
         return mTrailerData.size();
     }
 
-    /*
-    This method is used to pass a trailer key string on a TrailerAdapter if we've already created one.
-    This is handy when getting new data from the web but don't want to create a new TrailerAdapter to
-    display it.
-    */
+
     public void setTrailerData(List<Trailer> trailerData) {
         mTrailerData = trailerData;
         String[] arrayKeyString = new String[trailerData.size()];
@@ -131,12 +94,10 @@ public class TrailerAdapter extends RecyclerView.Adapter<TrailerAdapter.TrailerA
         }
     }
 
-    // The interface that receives onClick messages.
     public interface TrailerAdapterOnClickHandler {
         void onClick(String trailerSourceKey);
     }
 
-    // Use switch statement to set the different background color on trailer play icon.
     protected int getTrailerFabBackgroundColor(int position) {
         int trailerFabBackgroundColorId;
         switch (position) {

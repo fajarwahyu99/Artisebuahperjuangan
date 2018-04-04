@@ -22,9 +22,6 @@ import com.example.infolabsolution.thelastsubmission.MovieBasicInfo;
 import com.example.infolabsolution.thelastsubmission.MainActivity;
 import com.example.infolabsolution.thelastsubmission.ExternalPathUtils;
 
-/**
- * Created by jane on 17-6-20.
- */
 
 public class FetchExternalStorageTopMovieImageThumbnailsTask extends AsyncTask<MovieBasicInfo, Void, String> {
 
@@ -64,8 +61,6 @@ public class FetchExternalStorageTopMovieImageThumbnailsTask extends AsyncTask<M
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoOutput(true);
             urlConnection.connect();
-
-            // Nothing special, just want to give every file a different file name, according to their pass-in url string.
             String[] parts = urlToBeDownloaded.split("/");
             String lastPart = parts[7];
             String filename = lastPart;

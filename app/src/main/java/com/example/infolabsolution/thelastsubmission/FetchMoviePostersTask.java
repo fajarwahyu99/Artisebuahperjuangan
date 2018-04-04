@@ -22,9 +22,7 @@ import com.example.infolabsolution.thelastsubmission.Movie;
 import com.example.infolabsolution.thelastsubmission.MovieJsonUtils;
 import com.example.infolabsolution.thelastsubmission.NetworkUtils;
 
-/**
- * Created by jane on 17-6-15.
- */
+
 
 public class FetchMoviePostersTask extends AsyncTask<String, Void, List<Movie>> {
 
@@ -53,7 +51,6 @@ public class FetchMoviePostersTask extends AsyncTask<String, Void, List<Movie>> 
     @Override
     protected List<Movie> doInBackground(String... params) {
 
-        // If there's no sortBy method, there's no way of showing movies.
         if (params.length == 0) {
             return Collections.emptyList();
         }
@@ -102,7 +99,7 @@ public class FetchMoviePostersTask extends AsyncTask<String, Void, List<Movie>> 
 
             Log.i(TAG, "Pass movie data to main activity: " + array.size());
             this.mainActivity.getmMovieAdapter().setMoviePosterData(array);
-            // this.context.getmMovieAdapter().notifyDataSetChanged();
+
         } else {
             Log.e(TAG, mainActivity.getString(R.string.log_error_message_offline_before_fetch_movie_data_finish));
             String expectedMsg = mainActivity.getString(R.string.toast_message_offline_before_fetch_movie_data_finish);
