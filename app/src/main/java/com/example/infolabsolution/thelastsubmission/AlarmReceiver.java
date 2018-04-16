@@ -11,7 +11,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.i(TAG, "Alarm: On Alarm Receive !");
         WatchMovieNotificationUtils.notifyUserWatchMovie(context);
     }
 }

@@ -35,7 +35,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.v(TAG, "Built URI " + url);
         return url;
     }
 
@@ -52,7 +51,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.v(TAG, "Built Reviews URI " + url);
         return url;
     }
 
@@ -69,7 +67,6 @@ public class NetworkUtils {
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
-        Log.v(TAG, "Built Trailers URI " + url);
         return url;
     }
 

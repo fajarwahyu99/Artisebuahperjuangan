@@ -13,10 +13,10 @@ public class NotificationTasks {
 
     public static void executeTask(Context context, String action) {
         if (ACTION_DISMISS_NOTIFICATION.equals(action)) {
-            Log.i(TAG, "jag dismiss notify!");
+
             PopBestMovieNotificationUtils.clearAllNotifications(context);
         } else if (ACTION_NOTIFY.equals(action)) {
-            Log.i(TAG, "jag notify !");
+
             notifyUser(context);
         }
     }

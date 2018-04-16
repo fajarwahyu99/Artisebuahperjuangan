@@ -23,14 +23,12 @@ public class PersistTopService extends JobService {
     @Override
     public boolean onStartJob(final JobParameters params) {
 
-//        Log.i(TAG, "Halloooooooooo, jag ar pa start job top vag.");
 
         mPersistTopMovieTask = new PersistTopMovieTask(this) {
             @Override
             protected void onPostExecute(List<Movie> movieData) {
                 jobFinished(params, false);
-                Log.i(TAG, "Halloooooooooo, jag ar pa finish job top vag.");
-            }
+                   }
         };
 
         mPersistTopMovieTask.execute();
@@ -42,8 +40,7 @@ public class PersistTopService extends JobService {
         if (mPersistTopMovieTask != null) {
             mPersistTopMovieTask.cancel(true);
         }
-        Log.i(TAG, "Halloooooooooo, jag ar pa stop job top vag.");
-        return true;
+         return true;
     }
 }
 

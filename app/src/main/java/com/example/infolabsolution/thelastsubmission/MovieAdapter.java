@@ -67,16 +67,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
         return new MovieAdapterViewHolder(view);
     }
 
-    /**
-     * OnBindViewHolder is called by the RecyclerView to display the data at the specified
-     * position. In this method, update the contents of the ViewHolder to display the movie
-     * posters for each particular position, using the "position" argument that is conveniently
-     * passed in.
-     *
-     * @param movieAdapterViewHolder The ViewHolder which should be updated to represent the
-     *                               contents of the item at the given position in the data set.
-     * @param position               The position of the item within the adapter's data set.
-     */
+
     @Override
     public void onBindViewHolder(final MovieAdapterViewHolder movieAdapterViewHolder, final int position) {
 
@@ -115,7 +106,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
             final File pathToPic = new File(fullMoviePosterForOneMovie);
 
             Picasso.with(mainActivity)
-                    // PosterPath from external storage
                     .load(pathToPic)
                     .error(R.drawable.pic_error_loading_w370)
                     .into(movieAdapterViewHolder.mMoviePosterImageView, new Callback() {
@@ -127,8 +117,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                         @Override
                         public void onError() {
                             movieAdapterViewHolder.mErrorMovieNameTextView.setVisibility(View.VISIBLE);
-                            Log.i(TAG, "Current Position: " + position + "\nCurrent Movie Title: " + mCursor.getString(mCursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_ORIGINAL_TITLE)));
-                            mCursor.moveToPosition(position);
+                             mCursor.moveToPosition(position);
                             String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_ORIGINAL_TITLE));
                             if (currentMovieTitle.contains(":")) {
                                 String[] separated = currentMovieTitle.split(":");
@@ -164,8 +153,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                         @Override
                         public void onError() {
                             movieAdapterViewHolder.mErrorMovieNameTextView.setVisibility(View.VISIBLE);
-                            Log.i(TAG, "Current Position: " + position + "\nCurrent Movie Title: " + mCursor.getString(mCursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_ORIGINAL_TITLE)));
-                            mCursor.moveToPosition(position);
+                             mCursor.moveToPosition(position);
                             String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_ORIGINAL_TITLE));
                             if (currentMovieTitle.contains(":")) {
                                 String[] separated = currentMovieTitle.split(":");
@@ -200,8 +188,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                         @Override
                         public void onError() {
                             movieAdapterViewHolder.mErrorMovieNameTextView.setVisibility(View.VISIBLE);
-                            Log.i(TAG, "Current Position: " + position + "\nCurrent Movie Title: " + mCursor.getString(mCursor.getColumnIndex(FavMovieEntry.COLUMN_ORIGINAL_TITLE)));
-                            mCursor.moveToPosition(position);
+                             mCursor.moveToPosition(position);
                             String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(FavMovieEntry.COLUMN_ORIGINAL_TITLE));
                             if (currentMovieTitle.contains(":")) {
                                 String[] separated = currentMovieTitle.split(":");
@@ -249,8 +236,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                                 @Override
                                 public void onError() {
                                     movieAdapterViewHolder.mErrorMovieNameTextView.setVisibility(View.VISIBLE);
-                                    Log.i(TAG, "Current Position: " + position + "\nCurrent Movie Title: " + mCursor.getString(mCursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_ORIGINAL_TITLE)));
-                                    mCursor.moveToPosition(position);
+                                     mCursor.moveToPosition(position);
                                     String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_ORIGINAL_TITLE));
                                     if (currentMovieTitle.contains(":")) {
                                         String[] separated = currentMovieTitle.split(":");
@@ -280,7 +266,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                                 @Override
                                 public void onError() {
                                     movieAdapterViewHolder.mErrorMovieNameTextView.setVisibility(View.VISIBLE);
-                                    Log.i(TAG, "Current Position: " + position + "\nCurrent Movie Title: " + mCursor.getString(mCursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_ORIGINAL_TITLE)));
                                     mCursor.moveToPosition(position);
                                     String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_ORIGINAL_TITLE));
                                     if (currentMovieTitle.contains(":")) {
@@ -313,7 +298,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieAdapter
                         @Override
                         public void onError() {
                             movieAdapterViewHolder.mErrorMovieNameTextView.setVisibility(View.VISIBLE);
-                            Log.i(TAG, "Current Position: " + position + "\nCurrent Movie Title: " + mCursor.getString(mCursor.getColumnIndex(FavMovieEntry.COLUMN_ORIGINAL_TITLE)));
                             mCursor.moveToPosition(position);
                             String currentMovieTitle = mCursor.getString(mCursor.getColumnIndex(FavMovieEntry.COLUMN_ORIGINAL_TITLE));
                             if (currentMovieTitle.contains(":")) {

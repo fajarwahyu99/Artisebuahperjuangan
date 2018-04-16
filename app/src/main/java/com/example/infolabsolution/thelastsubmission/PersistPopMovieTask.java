@@ -60,9 +60,7 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
     @Override
     protected List<Movie> doInBackground(Void... params) {
 
-        Log.i(TAG, "Halloooooooooo, jag ar pa pop vag.");
-
-        URL movieRequestUrl = NetworkUtils.buildUrl("movie/" + "upcoming");
+         URL movieRequestUrl = NetworkUtils.buildUrl("movie/" + "upcoming");
 
         try {
             String jsonMovieResponse = NetworkUtils
@@ -113,10 +111,8 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
                         CacheMovieMostPopularEntry.CONTENT_URI,
                         cvArray);
                 if (bulkInsertRows == cVVector.size()) {
-                    Log.i(TAG, "bulkInsertCacheMovie MostPopular successful.");
-                } else {
-                    Log.i(TAG, "bulkInsertCacheMovie MostPopular unsuccessful.");
-                }
+                 } else {
+                 }
             }
 
             Boolean enableOffline = getEnableOfflinePreference();
@@ -139,8 +135,7 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
                 }
             }
         } else {
-            Log.e(TAG, context.getString(R.string.log_error_message_offline_before_fetch_movie_data_finish));
-            String expectedMsg = context.getString(R.string.toast_message_offline_before_fetch_movie_data_finish);
+             String expectedMsg = context.getString(R.string.toast_message_offline_before_fetch_movie_data_finish);
             if (MainActivity.mToast != null) {
                 String displayedText = ((TextView) ((LinearLayout) MainActivity.mToast.getView())
                         .getChildAt(0)).getText().toString();
@@ -167,13 +162,11 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
         if (postersMoviePicsFolder.exists()) {
 
             String[] fileNameArray = new String[postersMoviePicsFolder.listFiles().length];
-            Log.i(TAG, "download / filepath: pop poster file name count in external folder: " + postersMoviePicsFolder.listFiles().length);
-            int j = 0;
+             int j = 0;
             for (File pic : postersMoviePicsFolder.listFiles()) {
                 String fileName = "/" + pic.getName();
                 fileNameArray[j] = fileName;
-                Log.i(TAG, "download / filepath: pop poster file name in external folder: " + fileNameArray[j]);
-                j++;
+                 j++;
             }
 
             String[] projection = {CacheMovieMostPopularEntry.COLUMN_MOVIE_ID, CacheMovieMostPopularEntry.COLUMN_POSTER_PATH};
@@ -194,8 +187,7 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
                 i++;
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_ID));
                 if (!Arrays.asList(fileNameArray).contains(currentPosterPath)) {
-                    Log.i(TAG, "download / filepath: download pop external poster pic:" + currentPosterPath);
-                    String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
+                      String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
                             .concat(currentPosterPath);
                     new FetchExternalStoragePopMoviePosterImagesTask(this.context).execute(
                             new MovieBasicInfo(currentMovieId, fullMoviePosterForOneMovie));
@@ -222,8 +214,7 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
             while (!cursor.isAfterLast()) {
                 String currentPosterPath = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_POSTER_PATH));
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_ID));
-                Log.i(TAG, "download / filepath: download pop external poster pic:" + currentPosterPath);
-                String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
+                  String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
                         .concat(currentPosterPath);
                 new FetchExternalStoragePopMoviePosterImagesTask(this.context).execute(
                         new MovieBasicInfo(currentMovieId, fullMoviePosterForOneMovie));
@@ -242,13 +233,11 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
         if (thumbnailsMoviePicsFolder.exists()) {
 
             String[] fileNameArray = new String[thumbnailsMoviePicsFolder.listFiles().length];
-            Log.i(TAG, "download / filepath: pop image thumbnail file name count in external folder: " + thumbnailsMoviePicsFolder.listFiles().length);
-            int j = 0;
+             int j = 0;
             for (File pic : thumbnailsMoviePicsFolder.listFiles()) {
                 String fileName = "/" + pic.getName();
                 fileNameArray[j] = fileName;
-                Log.i(TAG, "download / filepath: pop image thumbnail file name in external folder: " + fileNameArray[j]);
-                j++;
+                 j++;
             }
 
             String[] projection = {CacheMovieMostPopularEntry.COLUMN_MOVIE_ID, CacheMovieMostPopularEntry.COLUMN_MOVIE_POSTER_IMAGE_THUMBNAIL};
@@ -270,8 +259,7 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
                 i++;
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_ID));
                 if (!Arrays.asList(fileNameArray).contains(currentImageThumbnail)) {
-                    Log.i(TAG, "download / filepath: download pop external image thumbnail pic:" + currentImageThumbnail);
-                    String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
+                     String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
                             .concat(currentImageThumbnail);
                     new FetchExternalStoragePopMovieImageThumbnailsTask(this.context).execute(
                             new MovieBasicInfo(currentMovieId, fullMoviePosterForOneMovie));
@@ -298,8 +286,7 @@ public class PersistPopMovieTask extends AsyncTask<Void, Void, List<Movie>> {
             while (!cursor.isAfterLast()) {
                 String currentImageThumbnail = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_POSTER_IMAGE_THUMBNAIL));
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_ID));
-                Log.i(TAG, "download / filepath: download pop external image thumbnail pic:" + currentImageThumbnail);
-                String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
+                 String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
                         .concat(currentImageThumbnail);
                 new FetchExternalStoragePopMovieImageThumbnailsTask(this.context).execute(
                         new MovieBasicInfo(currentMovieId, fullMoviePosterForOneMovie));

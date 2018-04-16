@@ -65,16 +65,13 @@ public class FetchExternalStoragePopMovieImageThumbnailsTask extends AsyncTask<M
             String[] parts = urlToBeDownloaded.split("/");
             String lastPart = parts[7];
             String filename = lastPart;
-            Log.i(TAG, this.context.getString(R.string.log_information_message_download_filename) + filename);
 
             File file = new File(ExternalPathUtils.getExternalPathBasicFileName(this.context) + "/cachethumbnails/" + filename);
 
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
                 boolean fileCreated = file.createNewFile();
-                Log.i(TAG, "creating new file: " + file.getAbsolutePath() + ", result: " + fileCreated);
             } else {
-                Log.i(TAG, "File already exists: " + file.getAbsolutePath());
             }
 
             FileOutputStream fileOutput = new FileOutputStream(file);
@@ -86,9 +83,6 @@ public class FetchExternalStoragePopMovieImageThumbnailsTask extends AsyncTask<M
             while ((bufferLength = inputStream.read(buffer)) > 0) {
                 fileOutput.write(buffer, 0, bufferLength);
                 downloadedSize += bufferLength;
-                Log.i(TAG, this.context.getString(R.string.log_information_message_download_downloadedSize)
-                        + downloadedSize + this.context.getString(R.string.log_information_message_download_totalSize)
-                        + totalSize);
             }
             inputStream.close();
             fileOutput.close();
@@ -101,16 +95,13 @@ public class FetchExternalStoragePopMovieImageThumbnailsTask extends AsyncTask<M
             filepath = null;
             Log.e(TAG, e.getMessage());
         }
-        Log.i(TAG, this.context.getString(R.string.log_information_message_download_filepath) + filepath);
         return filepath;
     }
 
     @Override
     protected void onPostExecute(String s) {
         if (s != null) {
-            Log.i(TAG, "Insert external image thumbnail poster path: " + s + " into cache upcoming movie folder successful.");
         } else {
-            Log.e(TAG, context.getString(R.string.log_error_message_offline_before_download_pics_finish));
             String expectedMsg = context.getString(R.string.toast_message_offline_before_download_finish);
 
             if (MainActivity.mToast != null) {

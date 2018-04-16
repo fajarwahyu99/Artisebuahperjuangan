@@ -33,11 +33,11 @@
                         android:layout_marginTop="@dimen/activity_detail_vertical_padding"
                         android:background="@color/colorPrimaryLight" />
 
-                    <include
-                        android:id="@+id/extra_details"
-                        layout="@layout/extra_movie_details"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                    <!--<include-->
+                        <!--android:id="@+id/extra_details"-->
+                        <!--layout="@layout/extra_movie_details"-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content" />-->
                 </LinearLayout>
             </ScrollView>
         </android.support.v4.widget.SwipeRefreshLayout>

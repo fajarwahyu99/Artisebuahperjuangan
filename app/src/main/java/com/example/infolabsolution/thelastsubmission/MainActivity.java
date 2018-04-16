@@ -210,9 +210,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             }
         }
 
-        // API 24 Android 7.0 Nougat
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Log.i(TAG, "jag Set up 6 job schedulers !");
             scheduleUpdatePopMovieJob();
             scheduleUpdateTopMovieJob();
             scheduleUpdateFavMovieJob();
@@ -228,7 +226,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     }
 
     private void setUpAlarm() {
-        Log.i(TAG, "Alarm: set up alarm!");
 
         alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlarmReceiver.class);
@@ -250,7 +247,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void scheduleUpdatePopMovieJob() {
-        Log.i(TAG, "Scheduling fetch pop movie job.");
         ComponentName serviceName = new ComponentName(this, PersistPopService.class);
         JobInfo jobInfo = new JobInfo.Builder(JobSchedulersConstants.JOB_ID_PERSIST_POP_MOVIE, serviceName)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
@@ -259,14 +255,12 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         int result = scheduler.schedule(jobInfo);
         if (result == JobScheduler.RESULT_SUCCESS) {
-            Log.i(TAG, "Fetch pop movie job scheduled successfully!");
         }
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void scheduleUpdateTopMovieJob() {
-        Log.i(TAG, "Scheduling fetch top movie job.");
         ComponentName serviceName = new ComponentName(this, PersistTopService.class);
         JobInfo jobInfo = new JobInfo.Builder(JobSchedulersConstants.JOB_ID_PERSIST_TOP_MOVIE, serviceName)
                 .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
@@ -275,7 +269,6 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         JobScheduler scheduler = (JobScheduler) getSystemService(Context.JOB_SCHEDULER_SERVICE);
         int result = scheduler.schedule(jobInfo);
         if (result == JobScheduler.RESULT_SUCCESS) {
-            Log.i(TAG, "Fetch top movie job scheduled successfully!");
         }
     }
 

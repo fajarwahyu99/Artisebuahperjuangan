@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.widget.RemoteViews;
 
@@ -70,6 +71,7 @@ public class DetailWidgetProvider extends AppWidgetProvider {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
@@ -98,8 +100,6 @@ public class DetailWidgetProvider extends AppWidgetProvider {
                 AppWidgetManager manager = AppWidgetManager.getInstance(context);
                 manager.updateAppWidget(thisWidget, views);
             } else {
-                Log.i(TAG, "jag : widget provider on receive without titleCoder, not from initCursorLoader" +
-                        ", from JobSchedular or delete All Movies.");
             }
         }
     }

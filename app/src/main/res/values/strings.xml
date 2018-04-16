@@ -150,11 +150,11 @@
     <string name="settings_order_by_default" translatable="false">@string/settings_order_by_most_popular_value</string>
 
     <!-- Label for order-by most upcoming option [CHAR LIMIT=20] -->
-    <string name="settings_order_by_most_popular_label" translatable="true">Most Popular</string>
+    <string name="settings_order_by_most_popular_label" translatable="true">upcoming</string>
     <string name="settings_order_by_most_popular_value" translatable="false">upcoming</string>
 
     <!-- Label for order-by top rated option [CHAR LIMIT=20] -->
-    <string name="settings_order_by_top_rated_label" translatable="true">Top Rated</string>
+    <string name="settings_order_by_top_rated_label" translatable="true">now_playing</string>
     <string name="settings_order_by_top_rated_value" translatable="false">now_playing</string>
 
     <!-- Label for order-by favorite movie option [CHAR LIMIT=20] -->

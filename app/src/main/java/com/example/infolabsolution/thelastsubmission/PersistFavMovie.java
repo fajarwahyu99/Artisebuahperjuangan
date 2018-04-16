@@ -37,7 +37,6 @@ public class PersistFavMovie {
 
     public static void persistFavMovie(Context context) {
 
-        Log.i(TAG, "Halloooooooooo, jag ar pa fav vag.");
 
 
         Boolean enableOffline = getEnableOfflinePreference(context);
@@ -68,13 +67,11 @@ public class PersistFavMovie {
         if (postersMoviePicsFolder.exists()) {
 
             String[] fileNameArray = new String[postersMoviePicsFolder.listFiles().length];
-            Log.i(TAG, "download / filepath: fav poster file name count in external folder: " + postersMoviePicsFolder.listFiles().length);
-            int j = 0;
+              int j = 0;
             for (File pic : postersMoviePicsFolder.listFiles()) {
                 String fileName = "/" + pic.getName();
                 fileNameArray[j] = fileName;
-                Log.i(TAG, "download / filepath: fav poster file name in external folder: " + fileNameArray[j]);
-                j++;
+                 j++;
             }
 
             String[] projection = {FavMovieEntry.COLUMN_MOVIE_ID, FavMovieEntry.COLUMN_POSTER_PATH};
@@ -96,8 +93,7 @@ public class PersistFavMovie {
                 i++;
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(FavMovieEntry.COLUMN_MOVIE_ID));
                 if (!Arrays.asList(fileNameArray).contains(currentPosterPath)) {
-                    Log.i(TAG, "download / filepath: download fav external poster pic:" + currentPosterPath);
-                    String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
+                     String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
                             .concat(currentPosterPath);
                     new FetchExternalStorageFavMoviePosterImagesTask(context).execute(
                             new MovieBasicInfo(currentMovieId, fullMoviePosterForOneMovie));
@@ -123,8 +119,7 @@ public class PersistFavMovie {
             while (!cursor.isAfterLast()) {
                 String currentPosterPath = cursor.getString(cursor.getColumnIndex(FavMovieEntry.COLUMN_POSTER_PATH));
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(FavMovieEntry.COLUMN_MOVIE_ID));
-                Log.i(TAG, "download / filepath: download fav external poster pic:" + currentPosterPath);
-                String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
+                    String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W185)
                         .concat(currentPosterPath);
                 new FetchExternalStorageFavMoviePosterImagesTask(context).execute(
                         new MovieBasicInfo(currentMovieId, fullMoviePosterForOneMovie));
@@ -143,13 +138,11 @@ public class PersistFavMovie {
         if (thumbnailsMoviePicsFolder.exists()) {
 
             String[] fileNameArray = new String[thumbnailsMoviePicsFolder.listFiles().length];
-            Log.i(TAG, "download / filepath: fav image thumbnail file name count in external folder: " + thumbnailsMoviePicsFolder.listFiles().length);
-            int j = 0;
+             int j = 0;
             for (File pic : thumbnailsMoviePicsFolder.listFiles()) {
                 String fileName = "/" + pic.getName();
                 fileNameArray[j] = fileName;
-                Log.i(TAG, "download / filepath: fav image thumbnail file name in external folder: " + fileNameArray[j]);
-                j++;
+                 j++;
             }
 
             String[] projection = {FavMovieEntry.COLUMN_MOVIE_ID, FavMovieEntry.COLUMN_MOVIE_POSTER_IMAGE_THUMBNAIL};
@@ -171,8 +164,7 @@ public class PersistFavMovie {
                 i++;
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(FavMovieEntry.COLUMN_MOVIE_ID));
                 if (!Arrays.asList(fileNameArray).contains(currentImageThumbnail)) {
-                    Log.i(TAG, "download / filepath: download fav external image thumbnail pic:" + currentImageThumbnail);
-                    String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W780)
+                     String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W780)
                             .concat(currentImageThumbnail);
                     new FetchExternalStorageFavMovieImageThumbnailsTask(context).execute(
                             new MovieBasicInfo(currentMovieId, fullMoviePosterForOneMovie));
@@ -199,7 +191,6 @@ public class PersistFavMovie {
             while (!cursor.isAfterLast()) {
                 String currentImageThumbnail = cursor.getString(cursor.getColumnIndex(FavMovieEntry.COLUMN_MOVIE_POSTER_IMAGE_THUMBNAIL));
                 String currentMovieId = cursor.getString(cursor.getColumnIndex(FavMovieEntry.COLUMN_MOVIE_ID));
-                Log.i(TAG, "download / filepath: download fav external image thumbnail pic:" + currentImageThumbnail);
                 String fullMoviePosterForOneMovie = BASE_IMAGE_URL.concat(IMAGE_SIZE_W780)
                         .concat(currentImageThumbnail);
                 new FetchExternalStorageFavMovieImageThumbnailsTask(context).execute(

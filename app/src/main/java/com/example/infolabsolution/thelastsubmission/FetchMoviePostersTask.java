@@ -66,7 +66,6 @@ public class FetchMoviePostersTask extends AsyncTask<String, Void, List<Movie>> 
             return simpleJsonMovieData;
 
         } catch (Exception e) {
-            Log.e(TAG, e.getMessage());
             return Collections.emptyList();
         }
     }
@@ -97,11 +96,9 @@ public class FetchMoviePostersTask extends AsyncTask<String, Void, List<Movie>> 
                 }
             }
 
-            Log.i(TAG, "Pass movie data to main activity: " + array.size());
             this.mainActivity.getmMovieAdapter().setMoviePosterData(array);
 
         } else {
-            Log.e(TAG, mainActivity.getString(R.string.log_error_message_offline_before_fetch_movie_data_finish));
             String expectedMsg = mainActivity.getString(R.string.toast_message_offline_before_fetch_movie_data_finish);
 
             if (this.mainActivity.getmToast() != null) {

@@ -34,7 +34,6 @@ public class WatchMovieNotificationUtils {
     }
 
     public static void notifyUserWatchMovie(Context context) {
-        Log.i(TAG, "Alarm: Watch movie notify !");
 
         String movie_title = "Interstellar";
         String tv_channel = "TV4 Film";

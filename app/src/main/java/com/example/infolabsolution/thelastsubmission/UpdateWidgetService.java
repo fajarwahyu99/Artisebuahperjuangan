@@ -17,15 +17,12 @@ public class UpdateWidgetService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
 
-        Log.i(TAG, "Halloooooooooo, jag ar pa start job update widget vag.");
-
         Intent dataUpdatedIntent = new Intent(ACTION_DATA_UPDATED);
         this.sendBroadcast(dataUpdatedIntent);
         return false;
     }
     @Override
     public boolean onStopJob(JobParameters params) {
-        Log.i(TAG, "Halloooooooooo, jag ar pa stop job update widget vag.");
-        return true;
+         return true;
     }
 }

@@ -19,13 +19,11 @@ public class NotificationFirebaseJobService extends JobService {
 
     @Override
     public boolean onStartJob(final JobParameters params) {
-        Log.i(TAG, "notification firebase job service onstartjob get called.");
 
         mBackgroundTask = new AsyncTask() {
 
             @Override
             protected Object doInBackground(Object[] params) {
-                Log.i(TAG, "notification firebase job service doinbackground get called.");
                 Context context = NotificationFirebaseJobService.this;
                 NotificationTasks.executeTask(context, NotificationTasks.ACTION_NOTIFY);
                 return null;

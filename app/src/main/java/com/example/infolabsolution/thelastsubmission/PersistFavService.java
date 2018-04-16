@@ -18,7 +18,6 @@ public class PersistFavService extends JobService {
     @Override
     public boolean onStartJob(final JobParameters params) {
 
-        Log.i(TAG, "Halloooooooooo, jag ar pa start job fav vag.");
 
         PersistFavMovie.persistFavMovie(this);
 
@@ -27,7 +26,6 @@ public class PersistFavService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        Log.i(TAG, "Halloooooooooo, jag ar pa stop job fav vag.");
-        return true;
+          return true;
     }
 }

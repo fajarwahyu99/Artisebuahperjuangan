@@ -37,25 +37,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.example.infolabsolution.thelastsubmission.R;
 import com.example.infolabsolution.thelastsubmission.MovieContract.FavMovieEntry;
 import com.example.infolabsolution.thelastsubmission.MovieContract.ReviewEntry;
 import com.example.infolabsolution.thelastsubmission.MovieContract.TrailerEntry;
-import com.example.infolabsolution.thelastsubmission.MovieDbHelper;
 import com.example.infolabsolution.thelastsubmission.databinding.ActivityDetailBinding;
-import com.example.infolabsolution.thelastsubmission.Movie;
-import com.example.infolabsolution.thelastsubmission.Review;
-import com.example.infolabsolution.thelastsubmission.ReviewAdapter;
-import com.example.infolabsolution.thelastsubmission.FetchReviewTask;
-import com.example.infolabsolution.thelastsubmission.FetchTrailerTask;
-import com.example.infolabsolution.thelastsubmission.Trailer;
-import com.example.infolabsolution.thelastsubmission.TrailerAdapter;
-import com.example.infolabsolution.thelastsubmission.TrailerAdapter.TrailerAdapterOnClickHandler;
-import com.example.infolabsolution.thelastsubmission.ExternalPathUtils;
 
 
-
-public class DetailActivity extends AppCompatActivity implements TrailerAdapterOnClickHandler {
+public class DetailActivity extends AppCompatActivity   {
 
     private static final String TAG = DetailActivity.class.getSimpleName();
 
@@ -92,7 +80,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
     private List<Review> mCurrentMovieReviews;
 
-    private List<Trailer> mCurrentMovieTrailers;
+
 
     private RecyclerView mReviewRecyclerView;
 
@@ -100,7 +88,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
     private ReviewAdapter mReviewAdapter;
 
-    private TrailerAdapter mTrailerAdapter;
+
 
     private String mNumberOfReviewString;
 
@@ -128,16 +116,10 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         this.mCurrentMovieReviews = mCurrentMovieReviews;
     }
 
-    public void setmCurrentMovieTrailers(List<Trailer> mCurrentMovieTrailers) {
-        this.mCurrentMovieTrailers = mCurrentMovieTrailers;
-    }
+
 
     public ReviewAdapter getmReviewAdapter() {
         return mReviewAdapter;
-    }
-
-    public TrailerAdapter getmTrailerAdapter() {
-        return mTrailerAdapter;
     }
 
     public void setmNumberOfReviewString(String mNumberOfReviewString) {
@@ -200,25 +182,22 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         LinearLayoutManager layoutManagerReviews = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,
                 false);
 
-        mReviewRecyclerView = mDetailBinding.extraDetails.recyclerviewMovieReviews;
-
-        mReviewRecyclerView.setLayoutManager(layoutManagerReviews);
-
-        mReviewAdapter = new ReviewAdapter();
-        mReviewRecyclerView.setAdapter(mReviewAdapter);
-
-        loadReviewData(mCurrentMovie.getId());
+//        mReviewRecyclerView = mDetailBinding.extraDetails.recyclerviewMovieReviews;
+//
+//        mReviewRecyclerView.setLayoutManager(layoutManagerReviews);
+//
+//        mReviewAdapter = new ReviewAdapter();
+//        mReviewRecyclerView.setAdapter(mReviewAdapter);
+//
+//        loadReviewData(mCurrentMovie.getId());
 
         LinearLayoutManager layoutManagerTrailers = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL,
                 false);
 
-        mTrailerRecyclerView = mDetailBinding.extraDetails.recyclerviewMovieTrailers;
-
-        mTrailerRecyclerView.setLayoutManager(layoutManagerTrailers);
-        mTrailerAdapter = new TrailerAdapter(this, this);
-
-        mTrailerRecyclerView.setAdapter(mTrailerAdapter);
-        loadTrailerData(mCurrentMovie.getId());
+//        mTrailerRecyclerView = mDetailBinding.extraDetails.recyclerviewMovieTrailers;
+//
+//        mTrailerRecyclerView.setLayoutManager(layoutManagerTrailers);
+//          loadTrailerData(mCurrentMovie.getId());
         mDetailBinding.primaryInfo.ivMoviePosterImageThumbnail.setContentDescription(mCurrentMovie.getOriginalTitle());
         View primaryLayout = findViewById(R.id.primary_info);
         mFabButton = (FloatingActionButton) primaryLayout.findViewById(R.id.fab_favorite);
@@ -245,36 +224,36 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 } else {
                     mFabButton.setColorFilter(ContextCompat.getColor(DetailActivity.this, R.color.colorWhiteFavoriteStar));
                     mFabButton.setContentDescription(getString(R.string.a11y_detail_activity_save_floating_button));
-                    deleteMovie();
+
                 }
             }
         });
 
-        mSwipeRefreshLayout.setOnRefreshListener(
-                new SwipeRefreshLayout.OnRefreshListener() {
-
-                    @Override
-                    public void onRefresh() {
-                        refreshMovie();
-                    }
-                }
-        );
-        int swipeRefreshBgColor = ContextCompat.getColor(this, R.color.colorPrimaryDark);
-        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(swipeRefreshBgColor);
-
-        mSwipeRefreshLayout.setColorSchemeResources(
-                R.color.colorWhiteFavoriteStar,
-                R.color.trailer10,
-                R.color.trailer9,
-                R.color.trailer8,
-                R.color.trailer7,
-                R.color.trailer6,
-                R.color.trailer5,
-                R.color.trailer4,
-                R.color.trailer3,
-                R.color.trailer2,
-                R.color.trailer1,
-                R.color.trailer0);
+//        mSwipeRefreshLayout.setOnRefreshListener(
+//                new SwipeRefreshLayout.OnRefreshListener() {
+//
+//                    @Override
+//                    public void onRefresh() {
+//                        refreshMovie();
+//                    }
+//                }
+//        );
+//        int swipeRefreshBgColor = ContextCompat.getColor(this, R.color.colorPrimaryDark);
+//        mSwipeRefreshLayout.setProgressBackgroundColorSchemeColor(swipeRefreshBgColor);
+//
+//        mSwipeRefreshLayout.setColorSchemeResources(
+//                R.color.colorWhiteFavoriteStar,
+//                R.color.trailer10,
+//                R.color.trailer9,
+//                R.color.trailer8,
+//                R.color.trailer7,
+//                R.color.trailer6,
+//                R.color.trailer5,
+//                R.color.trailer4,
+//                R.color.trailer3,
+//                R.color.trailer2,
+//                R.color.trailer1,
+//                R.color.trailer0);
     }
 
     private void setCurrentMovieImageThumbnailOffLine() {
@@ -317,9 +296,9 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         if (networkInfo != null && networkInfo.isConnected()) {
             setCurrentMovieImageThumbnailOnLine();
             mReviewRecyclerView.setVisibility(View.VISIBLE);
-            mTrailerRecyclerView.setVisibility(View.VISIBLE);
-            loadReviewData(mCurrentMovie.getId());
-            loadTrailerData(mCurrentMovie.getId());
+//            mTrailerRecyclerView.setVisibility(View.VISIBLE);
+//            loadReviewData(mCurrentMovie.getId());
+//            loadTrailerData(mCurrentMovie.getId());
         } else {
             hideLoadingIndicators();
             if (mToast != null) {
@@ -330,124 +309,104 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
             mToast.show();
         }
     }
-    private void loadReviewData(String id) {
-        try {
-            boolean movieIsInDatabase = checkIsMovieAlreadyInFavDatabase(id);
-            if (movieIsInDatabase) {
-                loadReviewDataFromDatabase(id);
-            } else {
-                NetworkInfo networkInfo = getNetworkInfo();
-                if (networkInfo != null && networkInfo.isConnected()) {
-                    new FetchReviewTask(this).execute(id);
-                } else {
-                    hideLoadingIndicators();
-                    setNumberOfReviewTextViewText(getString(R.string.detail_activity_offline_reminder_text));
-                }
-            }
-        } catch (NullPointerException e) {
-        }
-    }
+//    private void loadReviewData(String id) {
+//        try {
+//            boolean movieIsInDatabase = checkIsMovieAlreadyInFavDatabase(id);
+//            if (movieIsInDatabase) {
+//                loadReviewDataFromDatabase(id);
+//            } else {
+//                NetworkInfo networkInfo = getNetworkInfo();
+//                if (networkInfo != null && networkInfo.isConnected()) {
+////                    new FetchReviewTask(this).execute(id);
+//                } else {
+//                    hideLoadingIndicators();
+////                    setNumberOfReviewTextViewText(getString(R.string.detail_activity_offline_reminder_text));
+//                }
+//            }
+//        } catch (NullPointerException e) {
+//        }
+//    }
 
     public void hideLoadingIndicators() {
         mLoadingIndicator.setVisibility(View.INVISIBLE);
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
-    private void loadTrailerData(String id) {
+//    private void loadTrailerData(String id) {
+//
+//        try {
+//            boolean movieIsInDatabase = checkIsMovieAlreadyInFavDatabase(id);
+//            if (movieIsInDatabase) {
+//            } else {
+//                NetworkInfo networkInfo = getNetworkInfo();
+//                if (networkInfo != null && networkInfo.isConnected()) {
+////                    new FetchTrailerTask(this).execute(id);
+//                } else {
+//                    hideLoadingIndicators();
+//                    setNumberOfTrailerTextViewText(getString(R.string.detail_activity_offline_reminder_text));
+//                }
+//            }
+//        } catch (NullPointerException e) {
+//        }
+//    }
 
-        try {
-            boolean movieIsInDatabase = checkIsMovieAlreadyInFavDatabase(id);
-            if (movieIsInDatabase) {
-                loadTrailerDataFromDatabase(id);
-            } else {
-                NetworkInfo networkInfo = getNetworkInfo();
-                if (networkInfo != null && networkInfo.isConnected()) {
-                    new FetchTrailerTask(this).execute(id);
-                } else {
-                    hideLoadingIndicators();
-                    setNumberOfTrailerTextViewText(getString(R.string.detail_activity_offline_reminder_text));
-                }
-            }
-        } catch (NullPointerException e) {
-        }
-    }
+//    public void setTrailersLoadingIndicator() {
+//        mDetailBinding.extraDetails.tvNumberOfTrailer.setVisibility(View.INVISIBLE);
+//        mDetailBinding.extraDetails.ivTrailerLoadingIndicator.setVisibility(View.VISIBLE);
+//        Animation b = AnimationUtils.loadAnimation(this, R.anim.progress_animation_main);
+//        b.setDuration(1000);
+//        mDetailBinding.extraDetails.ivTrailerLoadingIndicator.startAnimation(b);
+//    }
+//
+//    public void setNumberOfTrailerTextViewText(String numberOfTrailerTextViewText) {
+//        mDetailBinding.extraDetails.ivTrailerLoadingIndicator.clearAnimation();
+//        mDetailBinding.extraDetails.ivTrailerLoadingIndicator.setVisibility(View.GONE);
+//        mDetailBinding.extraDetails.tvNumberOfTrailer.setVisibility(View.VISIBLE);
+//        mDetailBinding.extraDetails.tvNumberOfTrailer.setText(numberOfTrailerTextViewText);
+//    }
 
-    public void setTrailersLoadingIndicator() {
-        mDetailBinding.extraDetails.tvNumberOfTrailer.setVisibility(View.INVISIBLE);
-        mDetailBinding.extraDetails.ivTrailerLoadingIndicator.setVisibility(View.VISIBLE);
-        Animation b = AnimationUtils.loadAnimation(this, R.anim.progress_animation_main);
-        b.setDuration(1000);
-        mDetailBinding.extraDetails.ivTrailerLoadingIndicator.startAnimation(b);
-    }
+//    public void setReviewsLoadingIndicator() {
+//        mDetailBinding.extraDetails.tvNumberOfUserReview.setVisibility(View.INVISIBLE);
+//        mDetailBinding.extraDetails.ivReviewLoadingIndicator.setVisibility(View.VISIBLE);
+//        Animation c = AnimationUtils.loadAnimation(this, R.anim.progress_animation_main);
+//        c.setDuration(1000);
+//        mDetailBinding.extraDetails.ivReviewLoadingIndicator.startAnimation(c);
+//    }
+//
+//    public void setNumberOfReviewTextViewText(String numberOfReviewTextViewText) {
+//        mDetailBinding.extraDetails.ivReviewLoadingIndicator.clearAnimation();
+//        mDetailBinding.extraDetails.ivReviewLoadingIndicator.setVisibility(View.GONE);
+//        mDetailBinding.extraDetails.tvNumberOfUserReview.setVisibility(View.VISIBLE);
+//        mDetailBinding.extraDetails.tvNumberOfUserReview.setText(numberOfReviewTextViewText);
+//    }
 
-    public void setNumberOfTrailerTextViewText(String numberOfTrailerTextViewText) {
-        mDetailBinding.extraDetails.ivTrailerLoadingIndicator.clearAnimation();
-        mDetailBinding.extraDetails.ivTrailerLoadingIndicator.setVisibility(View.GONE);
-        mDetailBinding.extraDetails.tvNumberOfTrailer.setVisibility(View.VISIBLE);
-        mDetailBinding.extraDetails.tvNumberOfTrailer.setText(numberOfTrailerTextViewText);
-    }
-
-    public void setReviewsLoadingIndicator() {
-        mDetailBinding.extraDetails.tvNumberOfUserReview.setVisibility(View.INVISIBLE);
-        mDetailBinding.extraDetails.ivReviewLoadingIndicator.setVisibility(View.VISIBLE);
-        Animation c = AnimationUtils.loadAnimation(this, R.anim.progress_animation_main);
-        c.setDuration(1000);
-        mDetailBinding.extraDetails.ivReviewLoadingIndicator.startAnimation(c);
-    }
-
-    public void setNumberOfReviewTextViewText(String numberOfReviewTextViewText) {
-        mDetailBinding.extraDetails.ivReviewLoadingIndicator.clearAnimation();
-        mDetailBinding.extraDetails.ivReviewLoadingIndicator.setVisibility(View.GONE);
-        mDetailBinding.extraDetails.tvNumberOfUserReview.setVisibility(View.VISIBLE);
-        mDetailBinding.extraDetails.tvNumberOfUserReview.setText(numberOfReviewTextViewText);
-    }
-
-    @Override
-    public void onClick(String trailerSourceKey) {
-        NetworkInfo networkInfo = getNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BASE_YOUTUBE_URL_APP + trailerSourceKey));
-            Intent webIntent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse(BASE_YOUTUBE_URL_WEB + trailerSourceKey));
-            try {
-                startActivity(appIntent);
-            } catch (ActivityNotFoundException ex) {
-                startActivity(webIntent);
-            }
-        } else {
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            mToast = Toast.makeText(this, getString(R.string.detail_activity_offline_reminder_text), Toast.LENGTH_SHORT);
-            mToast.setGravity(Gravity.BOTTOM, 0, 0);
-            mToast.show();
-        }
-    }
+//    @Override
+//    public void onClick(String trailerSourceKey) {
+//        NetworkInfo networkInfo = getNetworkInfo();
+//        if (networkInfo != null && networkInfo.isConnected()) {
+//            Intent appIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(BASE_YOUTUBE_URL_APP + trailerSourceKey));
+//            Intent webIntent = new Intent(Intent.ACTION_VIEW,
+//                    Uri.parse(BASE_YOUTUBE_URL_WEB + trailerSourceKey));
+//            try {
+//                startActivity(appIntent);
+//            } catch (ActivityNotFoundException ex) {
+//                startActivity(webIntent);
+//            }
+//        } else {
+//            if (mToast != null) {
+//                mToast.cancel();
+//            }
+//            mToast = Toast.makeText(this, getString(R.string.detail_activity_offline_reminder_text), Toast.LENGTH_SHORT);
+//            mToast.setGravity(Gravity.BOTTOM, 0, 0);
+//            mToast.show();
+//        }
+//    }
 
     private void saveMovie() {
         NetworkInfo networkInfo = getNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            if (mCurrentMovieReviews != null && mCurrentMovieTrailers != null) {
+            if (mCurrentMovieReviews != null) {
                 if (mCurrentMovieReviews.size() > 0) {
-                    if (mCurrentMovieTrailers.size() > 0) {
-                        saveFavoriteMovie();
-                        saveFavoriteTrailer();
-                        saveFavoriteReview();
-                        Log.i(TAG, "mCurrentMovieReviews.size() = " + mCurrentMovieReviews.size());
-                        if (mToast != null) {
-                            mToast.cancel();
-                        }
-                        if (saveMovieRecordNumber == SAVE_MOVIE_SUCCESS && saveReviewRecordNumber == SAVE_REVIEW_SUCCESS
-                                && saveTrailerRecordNumber == SAVE_TRAILER_SUCCESS) {
-                            mToast = Toast.makeText(this, getString(R.string.insert_movie_successful), Toast.LENGTH_SHORT);
-                            mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                            mToast.show();
-                        } else {
-                            mToast = Toast.makeText(this, getString(R.string.insert_movie_failed), Toast.LENGTH_SHORT);
-                            mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                            mToast.show();
-                        }
-                    } else {
                         saveFavoriteMovie();
                         saveFavoriteReview();
                         if (mToast != null) {
@@ -465,22 +424,7 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                     }
 
                 } else {
-                    if (mCurrentMovieTrailers.size() > 0) {
-                        saveFavoriteMovie();
-                        saveFavoriteTrailer();
-                        if (mToast != null) {
-                            mToast.cancel();
-                        }
-                        if (saveMovieRecordNumber == SAVE_MOVIE_SUCCESS && saveTrailerRecordNumber == SAVE_TRAILER_SUCCESS) {
-                            mToast = Toast.makeText(this, getString(R.string.insert_movie_successful), Toast.LENGTH_SHORT);
-                            mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                            mToast.show();
-                        } else {
-                            mToast = Toast.makeText(this, getString(R.string.insert_movie_failed), Toast.LENGTH_SHORT);
-                            mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                            mToast.show();
-                        }
-                    } else {
+                    {
                         saveFavoriteMovie();
                         if (mToast != null) {
                             mToast.cancel();
@@ -501,120 +445,72 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 if (mToast != null) {
                     mToast.cancel();
                 }
-                mToast = Toast.makeText(this, getString(R.string.toast_message_review_and_trailer_not_loaded_yet), Toast.LENGTH_SHORT);
-                mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                mToast.show();
-            }
-        } else {
-            saveFavoriteMovie();
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            if (saveMovieRecordNumber == SAVE_MOVIE_SUCCESS) {
-                mToast = Toast.makeText(this, getString(R.string.insert_movie_successful_reviews_trailers_later), Toast.LENGTH_SHORT);
-                mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                mToast.show();
-            } else {
-                mToast = Toast.makeText(this, getString(R.string.insert_movie_failed), Toast.LENGTH_SHORT);
-                mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                mToast.show();
+//                mToast = Toast.makeText(this, getString(R.string.toast_message_review_and_trailer_not_loaded_yet), Toast.LENGTH_SHORT);
+//                mToast.setGravity(Gravity.BOTTOM, 0, 0);
+//                mToast.show();
             }
         }
-    }
+//            saveFavoriteMovie();
+//            if (mToast != null) {
+//                mToast.cancel();
+//            }
+//            if (saveMovieRecordNumber == SAVE_MOVIE_SUCCESS) {
+//                mToast = Toast.makeText(this, getString(R.string.insert_movie_successful_reviews_trailers_later), Toast.LENGTH_SHORT);
+//                mToast.setGravity(Gravity.BOTTOM, 0, 0);
+//                mToast.show();
+//            } else {
+//                mToast = Toast.makeText(this, getString(R.string.insert_movie_failed), Toast.LENGTH_SHORT);
+//                mToast.setGravity(Gravity.BOTTOM, 0, 0);
+//                mToast.show();
+//            }
 
 
-    private void deleteMovie() {
 
-        if (mCurrentMovieReviews == null && mCurrentMovieTrailers == null) {
-            deleteFavoriteMovie();
-            if (mToast != null) {
-                mToast.cancel();
-            }
-            if (deleteMovieRecordNumber == DELETE_MOVIE_SUCCESS) {
-                mToast = Toast.makeText(this, getString(R.string.delete_movie_successful), Toast.LENGTH_SHORT);
-                mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                mToast.show();
-            } else {
-                mToast = Toast.makeText(this, getString(R.string.delete_movie_failed), Toast.LENGTH_SHORT);
-                mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                mToast.show();
-            }
-        } else {
-            if (mCurrentMovieReviews != null && mCurrentMovieReviews.size() > 0) {
-                if (mCurrentMovieTrailers != null && mCurrentMovieTrailers.size() > 0) {
-                    deleteFavoriteMovie();
-                    deleteFavoriteTrailer();
-                    deleteFavoriteReview();
-                    if (mToast != null) {
-                        mToast.cancel();
-                    }
-                    if (deleteMovieRecordNumber == DELETE_MOVIE_SUCCESS && deleteReviewRecordNumber == DELETE_REVIEW_SUCCESS
-                            && deleteTrailerRecordNumber == DELETE_TRAILER_SUCCESS) {
-                        mToast = Toast.makeText(this, getString(R.string.delete_movie_successful), Toast.LENGTH_SHORT);
-                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                        mToast.show();
-                    } else {
-                        mToast = Toast.makeText(this, getString(R.string.delete_movie_failed), Toast.LENGTH_SHORT);
-                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                        mToast.show();
-                    }
-                } else {
-                    deleteFavoriteMovie();
-                    deleteFavoriteReview();
-                    if (mToast != null) {
-                        mToast.cancel();
-                    }
-                    if (deleteMovieRecordNumber == DELETE_MOVIE_SUCCESS && deleteReviewRecordNumber == DELETE_REVIEW_SUCCESS) {
-                        mToast = Toast.makeText(this, getString(R.string.delete_movie_successful), Toast.LENGTH_SHORT);
-                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                        mToast.show();
-                    } else {
-                        mToast = Toast.makeText(this, getString(R.string.delete_movie_failed), Toast.LENGTH_SHORT);
-                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                        mToast.show();
-                    }
-                }
-            } else {
-                if (mCurrentMovieTrailers != null && mCurrentMovieTrailers.size() > 0) {
-                    deleteFavoriteMovie();
-                    deleteFavoriteTrailer();
-                    if (mToast != null) {
-                        mToast.cancel();
-                    }
-                    if (deleteMovieRecordNumber == DELETE_MOVIE_SUCCESS && deleteTrailerRecordNumber == DELETE_TRAILER_SUCCESS) {
-                        mToast = Toast.makeText(this, getString(R.string.delete_movie_successful), Toast.LENGTH_SHORT);
-                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                        mToast.show();
-                    } else {
-                        mToast = Toast.makeText(this, getString(R.string.delete_movie_failed), Toast.LENGTH_SHORT);
-                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                        mToast.show();
-                    }
-                } else {
-                    deleteFavoriteMovie();
-                    if (mToast != null) {
-                        mToast.cancel();
-                    }
-                    if (deleteMovieRecordNumber == DELETE_MOVIE_SUCCESS) {
-                        mToast = Toast.makeText(this, getString(R.string.delete_movie_successful), Toast.LENGTH_SHORT);
-                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                        mToast.show();
-                    } else {
-                        mToast = Toast.makeText(this, getString(R.string.delete_movie_failed), Toast.LENGTH_SHORT);
-                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                        mToast.show();
-                    }
-                }
-            }
-        }
-        NetworkInfo networkInfo = getNetworkInfo();
-        if (networkInfo == null || !networkInfo.isConnected()) {
-            loadTrailerData(mCurrentMovie.getId());
-            loadReviewData(mCurrentMovie.getId());
-            mTrailerRecyclerView.setVisibility(View.GONE);
-            mReviewRecyclerView.setVisibility(View.GONE);
-        }
-    }
+
+//    private void deleteMovie() {
+//
+//        if (mCurrentMovieReviews == null) {
+//            deleteFavoriteMovie();
+//            if (mToast != null) {
+//                mToast.cancel();
+//            }
+//            if (deleteMovieRecordNumber == DELETE_MOVIE_SUCCESS) {
+//                mToast = Toast.makeText(this, getString(R.string.delete_movie_successful), Toast.LENGTH_SHORT);
+//                mToast.setGravity(Gravity.BOTTOM, 0, 0);
+//                mToast.show();
+//            } else {
+//                mToast = Toast.makeText(this, getString(R.string.delete_movie_failed), Toast.LENGTH_SHORT);
+//                mToast.setGravity(Gravity.BOTTOM, 0, 0);
+//                mToast.show();
+//            }
+//        } else {
+//            if (mCurrentMovieReviews != null && mCurrentMovieReviews.size() > 0) {
+//             if {
+//                    deleteFavoriteMovie();
+//                    deleteFavoriteReview();
+//                    if (mToast != null) {
+//                        mToast.cancel();
+//                    }
+//                    if (deleteMovieRecordNumber == DELETE_MOVIE_SUCCESS && deleteReviewRecordNumber == DELETE_REVIEW_SUCCESS) {
+//                        mToast = Toast.makeText(this, getString(R.string.delete_movie_successful), Toast.LENGTH_SHORT);
+//                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
+//                        mToast.show();
+//                    } else {
+//                        mToast = Toast.makeText(this, getString(R.string.delete_movie_failed), Toast.LENGTH_SHORT);
+//                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
+//                        mToast.show();
+//                    }
+//                }
+//            }
+//        }
+//        NetworkInfo networkInfo = getNetworkInfo();
+//        if (networkInfo == null || !networkInfo.isConnected()) {
+//            loadTrailerData(mCurrentMovie.getId());
+//            loadReviewData(mCurrentMovie.getId());
+//            mTrailerRecyclerView.setVisibility(View.GONE);
+//            mReviewRecyclerView.setVisibility(View.GONE);
+//        }
+//    }
 
 
     public void saveFavoriteMovie() {
@@ -628,17 +524,14 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         values.put(FavMovieEntry.COLUMN_RELEASE_DATE, mCurrentMovie.getReleaseDate());
         values.put(FavMovieEntry.COLUMN_MOVIE_ID, mCurrentMovie.getId());
         values.put(FavMovieEntry.COLUMN_NUMBER_OF_REVIEWS, mNumberOfReviewString);
-        Log.i(TAG, "number of reviews: " + mNumberOfReviewString);
-        values.put(FavMovieEntry.COLUMN_NUMBER_OF_TRAILERS, mNumberOfTrailerString);
-
+//        values.put(FavMovieEntry.COLUMN_NUMBER_OF_TRAILERS, mNumberOfTrailerString);
+//
         Uri newUri = getContentResolver().insert(FavMovieEntry.CONTENT_URI, values);
 
         if (newUri == null) {
             saveMovieRecordNumber = SAVE_MOVIE_FAIL;
-            Log.e(TAG, getString(R.string.insert_movie_movie_failed));
         } else {
             saveMovieRecordNumber = SAVE_MOVIE_SUCCESS;
-            Log.i(TAG, getString(R.string.insert_movie_movie_successful));
         }
     }
 
@@ -655,33 +548,28 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
             if (newUri == null) {
                 saveReviewRecordNumber = SAVE_REVIEW_FAIL;
-                Log.e(TAG, getString(R.string.insert_review_failed) + i);
             } else {
                 saveReviewRecordNumber = SAVE_REVIEW_SUCCESS;
-                Log.i(TAG, getString(R.string.insert_review_successful) + i);
             }
         }
     }
 
-
-    public void saveFavoriteTrailer() {
-
-        for (int i = 0; i < Integer.valueOf(mNumberOfTrailerString); i++) {
-            ContentValues values = new ContentValues();
-            values.put(TrailerEntry.COLUMN_MOVIE_ID, mCurrentMovie.getId());
-            values.put(TrailerEntry.COLUMN_KEY_OF_TRAILER, mCurrentMovieTrailers.get(i).getKeyString());
-
-            Uri newUri = getContentResolver().insert(TrailerEntry.CONTENT_URI, values);
-
-            if (newUri == null) {
-                saveTrailerRecordNumber = SAVE_TRAILER_FAIL;
-                Log.e(TAG, getString(R.string.insert_trailer_failed) + i);
-            } else {
-                saveTrailerRecordNumber = SAVE_TRAILER_SUCCESS;
-                Log.i(TAG, getString(R.string.insert_trailer_successful) + i);
-            }
-        }
-    }
+//
+//    public void saveFavoriteTrailer() {
+//
+//        for (int i = 0; i < Integer.valueOf(mNumberOfTrailerString); i++) {
+//            ContentValues values = new ContentValues();
+//            values.put(TrailerEntry.COLUMN_MOVIE_ID, mCurrentMovie.getId());
+//
+//            Uri newUri = getContentResolver().insert(TrailerEntry.CONTENT_URI, values);
+//
+//            if (newUri == null) {
+//                saveTrailerRecordNumber = SAVE_TRAILER_FAIL;
+//            } else {
+//                saveTrailerRecordNumber = SAVE_TRAILER_SUCCESS;
+//            }
+//        }
+//    }
 
 
     private void deleteFavoriteMovie() {
@@ -691,10 +579,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
         if (rowsDeleted == 0) {
             deleteMovieRecordNumber = DELETE_MOVIE_FAIL;
-            Log.e(TAG, getString(R.string.delete_movie_movie_failed));
         } else {
             deleteMovieRecordNumber = DELETE_MOVIE_SUCCESS;
-            Log.i(TAG, getString(R.string.delete_movie_movie_successful));
         }
     }
 
@@ -705,10 +591,8 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
         if (rowsDeleted == 0) {
             deleteReviewRecordNumber = DELETE_REVIEW_FAIL;
-            Log.e(TAG, getString(R.string.delete_review_failed));
         } else {
             deleteReviewRecordNumber = DELETE_REVIEW_SUCCESS;
-            Log.i(TAG, rowsDeleted + getString(R.string.delete_review_successful));
         }
         NetworkInfo networkInfo = getNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
@@ -724,19 +608,18 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
 
         if (rowsDeleted == 0) {
             deleteTrailerRecordNumber = DELETE_TRAILER_FAIL;
-            Log.e(TAG, getString(R.string.delete_trailer_failed));
+
         } else {
             deleteTrailerRecordNumber = DELETE_TRAILER_SUCCESS;
-            Log.i(TAG, rowsDeleted + getString(R.string.delete_trailer_successful));
         }
         NetworkInfo networkInfo = getNetworkInfo();
         if (networkInfo == null || !networkInfo.isConnected()) {
-            mCurrentMovieTrailers = null;
+
         }
     }
 
     public void loadReviewDataFromDatabase(String movieId) {
-        setReviewsLoadingIndicator();
+//        setReviewsLoadingIndicator();
         List<Review> reviews = new ArrayList<>();
         String selection = ReviewEntry.COLUMN_MOVIE_ID + "=?";
         String[] selectionArgs = {movieId};
@@ -764,12 +647,12 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                 mCurrentMovieReviews = reviews;
                 mReviewAdapter.setReviewData(reviews);
                 mNumberOfReviewString = Integer.toString(mReviewAdapter.getItemCount());
-                setNumberOfReviewTextViewText(mNumberOfReviewString);
+//                setNumberOfReviewTextViewText(mNumberOfReviewString);
             }
         } else {
             NetworkInfo networkInfo = getNetworkInfo();
             if (networkInfo != null && networkInfo.isConnected()) {
-                new FetchReviewTask(this).execute(movieId);
+//                new FetchReviewTask(this).execute(movieId);
             } else {
                 hideLoadingIndicators();
 
@@ -780,85 +663,75 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
                         selection,
                         selectionArgs,
                         null);
-                Log.i(TAG, "number of new cursor: " + newCursor.getCount());
                 if (newCursor != null && newCursor.getCount() > 0) {
                     newCursor.moveToFirst();
                     if (newCursor.getString(newCursor.getColumnIndex(FavMovieEntry.COLUMN_NUMBER_OF_REVIEWS)) != null) {
                         String numberOfReview = newCursor.getString(newCursor.getColumnIndex(FavMovieEntry.COLUMN_NUMBER_OF_REVIEWS));
                         if (numberOfReview.equals("0")) {
-                            setNumberOfReviewTextViewText(numberOfReview);
+//                            setNumberOfReviewTextViewText(numberOfReview);
                         } else {
-                            setNumberOfReviewTextViewText(getString(R.string.detail_activity_offline_reminder_text));
+//                            setNumberOfReviewTextViewText(getString(R.string.detail_activity_offline_reminder_text));
                         }
                     } else {
-                        setNumberOfReviewTextViewText(getString(R.string.detail_activity_offline_reminder_text));
-                    }
+//                        setNumberOfReviewTextViewText(getString(R.string.detail_activity_offline_reminder_text));
+                   }
                 }
                 newCursor.close();
             }
         }
     }
 
-    public void loadTrailerDataFromDatabase(String movieId) {
-        setTrailersLoadingIndicator();
-        List<Trailer> trailers = new ArrayList<>();
-        String selection = TrailerEntry.COLUMN_MOVIE_ID + "=?";
-        String[] selectionArgs = {movieId};
-        Cursor cursor = getContentResolver().query(
-                TrailerEntry.CONTENT_URI,
-                null,
-                selection,
-                selectionArgs,
-                null);
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            mFirstTrailerSourceKey = cursor.getString(cursor.getColumnIndex(TrailerEntry.COLUMN_KEY_OF_TRAILER));
-            while (!cursor.isAfterLast()) {
-                String trailer_key = cursor.getString(cursor.getColumnIndex(TrailerEntry.COLUMN_KEY_OF_TRAILER));
-                Trailer trailer = new Trailer(trailer_key);
-                trailers.add(trailer);
-                cursor.moveToNext();
-            }
-            cursor.close();
-            if (trailers != null) {
-                hideLoadingIndicators();
-                mCurrentMovieTrailers = trailers;
-                mTrailerAdapter.setTrailerData(trailers);
-                mNumberOfTrailerString = Integer.toString(mTrailerAdapter.getItemCount());
-                setNumberOfTrailerTextViewText(mNumberOfTrailerString);
-            }
-        } else {
-            NetworkInfo networkInfo = getNetworkInfo();
-            if (networkInfo != null && networkInfo.isConnected()) {
-                new FetchTrailerTask(this).execute(movieId);
-            } else {
-                hideLoadingIndicators();
-
-                String[] projection = {FavMovieEntry.COLUMN_NUMBER_OF_TRAILERS};
-                Cursor newCursor = getContentResolver().query(
-                        FavMovieEntry.CONTENT_URI,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null);
-                Log.i(TAG, "number of new cursor: " + newCursor.getCount());
-                if (newCursor != null & newCursor.getCount() > 0) {
-                    newCursor.moveToFirst();
-                    if (newCursor.getString(newCursor.getColumnIndex(FavMovieEntry.COLUMN_NUMBER_OF_TRAILERS)) != null) {
-                        String numberOfTrailer = newCursor.getString(newCursor.getColumnIndex(FavMovieEntry.COLUMN_NUMBER_OF_TRAILERS));
-                        if (numberOfTrailer.equals("0")) {
-                            setNumberOfTrailerTextViewText(numberOfTrailer);
-                        } else {
-                            setNumberOfTrailerTextViewText(getString(R.string.detail_activity_offline_reminder_text));
-                        }
-                    } else {
-                        setNumberOfTrailerTextViewText(getString(R.string.detail_activity_offline_reminder_text));
-                    }
-                }
-                newCursor.close();
-            }
-        }
-    }
+//    public void loadTrailerDataFromDatabase(String movieId) {
+//        setTrailersLoadingIndicator();
+//
+//        String selection = TrailerEntry.COLUMN_MOVIE_ID + "=?";
+//        String[] selectionArgs = {movieId};
+//        Cursor cursor = getContentResolver().query(
+//                TrailerEntry.CONTENT_URI,
+//                null,
+//                selection,
+//                selectionArgs,
+//                null);
+//        if (cursor != null && cursor.getCount() > 0) {
+//            cursor.moveToFirst();
+//            mFirstTrailerSourceKey = cursor.getString(cursor.getColumnIndex(TrailerEntry.COLUMN_KEY_OF_TRAILER));
+//            while (!cursor.isAfterLast()) {
+//                String trailer_key = cursor.getString(cursor.getColumnIndex(TrailerEntry.COLUMN_KEY_OF_TRAILER));
+//
+//                cursor.moveToNext();
+//            }
+//            cursor.close();
+//
+//            }
+//        } else {
+//            NetworkInfo networkInfo = getNetworkInfo();
+//            if (networkInfo != null && networkInfo.isConnected()) {
+//
+//            } else {
+//                hideLoadingIndicators();
+//
+//                String[] projection = {FavMovieEntry.COLUMN_NUMBER_OF_TRAILERS};
+//                Cursor newCursor = getContentResolver().query(
+//                        FavMovieEntry.CONTENT_URI,
+//
+//                        null);
+//                if (newCursor != null & newCursor.getCount() > 0) {
+//                    newCursor.moveToFirst();
+//                    if (newCursor.getString(newCursor.getColumnIndex(FavMovieEntry.COLUMN_NUMBER_OF_TRAILERS)) != null) {
+//                        String numberOfTrailer = newCursor.getString(newCursor.getColumnIndex(FavMovieEntry.COLUMN_NUMBER_OF_TRAILERS));
+//                        if (numberOfTrailer.equals("0")) {
+//                            setNumberOfTrailerTextViewText(numberOfTrailer);
+//                        } else {
+//                            setNumberOfTrailerTextViewText(getString(R.string.detail_activity_offline_reminder_text));
+//                        }
+//                    } else {
+//                        setNumberOfTrailerTextViewText(getString(R.string.detail_activity_offline_reminder_text));
+//                    }
+//                }
+//                newCursor.close();
+//            }
+//        }
+//    }
 
     public boolean checkIsMovieAlreadyInFavDatabase(String movieId) {
         SQLiteDatabase database = mMovieDbHelper.getReadableDatabase();
@@ -891,65 +764,65 @@ public class DetailActivity extends AppCompatActivity implements TrailerAdapterO
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        int id = item.getItemId();
+//
+//        switch (id) {
+//            // Have a refresh menu button to perform the refresh again, in case some device or some
+//            // users cannot perform swipe to refresh.
+//            case R.id.action_refresh:
+//                mLoadingIndicator.setVisibility(View.VISIBLE);
+//                refreshMovie();
+//                return true;
+//            // Share first trailer url
+//            case R.id.action_share:
+//                NetworkInfo networkInfo = getNetworkInfo();
+//                if (networkInfo != null && networkInfo.isConnected()) {
+////                    if (mCurrentMovieTrailers != null) {
+////                        if (mFirstTrailerSourceKey != null) {
+////                            String urlToShare = BASE_YOUTUBE_URL_WEB + mFirstTrailerSourceKey;
+////                            shareFirstYoutubeUrl(urlToShare);
+////                        } else {
+////                            if (mToast != null) {
+////                                mToast.cancel();
+////                            }
+////                            mToast = Toast.makeText(this, getString(R.string.toast_message_no_trailer_to_share), Toast.LENGTH_SHORT);
+////                            mToast.setGravity(Gravity.BOTTOM, 0, 0);
+////                            mToast.show();
+////                        }
+////                    } else {
+////                        if (mToast != null) {
+////                            mToast.cancel();
+////                        }
+////                        mToast = Toast.makeText(this, getString(R.string.toast_message_trailer_not_loaded_yet), Toast.LENGTH_SHORT);
+////                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
+////                        mToast.show();
+////                    }
+//                } else {
+//                    if (mToast != null) {
+//                        mToast.cancel();
+//                    }
+//                    mToast = Toast.makeText(this, getString(R.string.detail_activity_offline_reminder_text), Toast.LENGTH_SHORT);
+//                    mToast.setGravity(Gravity.BOTTOM, 0, 0);
+//                    mToast.show();
+//                }
+//                return true;
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
 
-        switch (id) {
-            // Have a refresh menu button to perform the refresh again, in case some device or some
-            // users cannot perform swipe to refresh.
-            case R.id.action_refresh:
-                mLoadingIndicator.setVisibility(View.VISIBLE);
-                refreshMovie();
-                return true;
-            // Share first trailer url
-            case R.id.action_share:
-                NetworkInfo networkInfo = getNetworkInfo();
-                if (networkInfo != null && networkInfo.isConnected()) {
-                    if (mCurrentMovieTrailers != null) {
-                        if (mFirstTrailerSourceKey != null) {
-                            String urlToShare = BASE_YOUTUBE_URL_WEB + mFirstTrailerSourceKey;
-                            shareFirstYoutubeUrl(urlToShare);
-                        } else {
-                            if (mToast != null) {
-                                mToast.cancel();
-                            }
-                            mToast = Toast.makeText(this, getString(R.string.toast_message_no_trailer_to_share), Toast.LENGTH_SHORT);
-                            mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                            mToast.show();
-                        }
-                    } else {
-                        if (mToast != null) {
-                            mToast.cancel();
-                        }
-                        mToast = Toast.makeText(this, getString(R.string.toast_message_trailer_not_loaded_yet), Toast.LENGTH_SHORT);
-                        mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                        mToast.show();
-                    }
-                } else {
-                    if (mToast != null) {
-                        mToast.cancel();
-                    }
-                    mToast = Toast.makeText(this, getString(R.string.detail_activity_offline_reminder_text), Toast.LENGTH_SHORT);
-                    mToast.setGravity(Gravity.BOTTOM, 0, 0);
-                    mToast.show();
-                }
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private void shareFirstYoutubeUrl(String urlToShare) {
-        String mimeType = "text/plain";
-        String title = getString(R.string.title_share_url_string);
-        ShareCompat.IntentBuilder
-                .from(this)
-                .setType(mimeType)
-                .setChooserTitle(title)
-                .setText(urlToShare)
-                .startChooser();
-    }
+//    private void shareFirstYoutubeUrl(String urlToShare) {
+//        String mimeType = "text/plain";
+//        String title = getString(R.string.title_share_url_string);
+//        ShareCompat.IntentBuilder
+//                .from(this)
+//                .setType(mimeType)
+//                .setChooserTitle(title)
+//                .setText(urlToShare)
+//                .startChooser();
+//    }
 
     private NetworkInfo getNetworkInfo() {
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);

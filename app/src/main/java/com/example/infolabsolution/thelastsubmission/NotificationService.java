@@ -18,7 +18,6 @@ public class NotificationService extends JobService {
     @Override
     public boolean onStartJob(JobParameters params) {
 
-        Log.i(TAG, "Halloooooooooo, jag ar pa start job notification vag.");
 
         Context context = NotificationService.this;
         NotificationTasks.executeTask(context, NotificationTasks.ACTION_NOTIFY);
@@ -27,7 +26,6 @@ public class NotificationService extends JobService {
 
     @Override
     public boolean onStopJob(JobParameters params) {
-        Log.i(TAG, "Halloooooooooo, jag ar pa stop job notification vag.");
         return true;
     }
 }

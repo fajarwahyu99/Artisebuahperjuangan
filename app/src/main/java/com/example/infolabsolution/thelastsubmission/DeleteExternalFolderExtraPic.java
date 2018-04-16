@@ -21,7 +21,6 @@ public class DeleteExternalFolderExtraPic {
 
     public static void deleteExtraMoviePosterFilePic(Context context) {
 
-        Log.i(TAG, "Halloooooooooo, jag ar pa delete extra poster vag.");
 
         String[] postersPopPathArray = getPostersPopPathArray(context);
 
@@ -39,7 +38,6 @@ public class DeleteExternalFolderExtraPic {
                 if (!Arrays.asList(postersPopPathArray).contains(fileName)
                         && !Arrays.asList(postersTopPathArray).contains(fileName)
                         && !Arrays.asList(postersFavPathArray).contains(fileName)) {
-                    Log.i(TAG, "delete / filepath: delete external poster pic:" + fileName);
                     pic.delete();
                 }
             }
@@ -48,7 +46,6 @@ public class DeleteExternalFolderExtraPic {
 
     public static void deleteExtraMovieThumbnailFilePic(Context context) {
 
-        Log.i(TAG, "Halloooooooooo, jag ar pa delete extra thumbnail vag.");
 
         String[] thumbnailsPopPathArray = getThumbnailsPopPathArray(context);
 
@@ -65,7 +62,6 @@ public class DeleteExternalFolderExtraPic {
                 if (!Arrays.asList(thumbnailsPopPathArray).contains(fileName)
                         && !Arrays.asList(thumbnailsTopPathArray).contains(fileName)
                         && !Arrays.asList(thumbnailsFavPathArray).contains(fileName)) {
-                    Log.i(TAG, "delete / filepath: delete pop external thumbnail pic:" + fileName);
                     pic.delete();
                 }
             }
@@ -86,7 +82,6 @@ public class DeleteExternalFolderExtraPic {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 imageFavThumbnailArray[i] = cursor.getString(cursor.getColumnIndex(FavMovieEntry.COLUMN_MOVIE_POSTER_IMAGE_THUMBNAIL));
-                Log.i(TAG, "delete / filepath: fav image thumbnail path in database: " + imageFavThumbnailArray[i]);
                 i++;
                 cursor.moveToNext();
             }
@@ -110,7 +105,6 @@ public class DeleteExternalFolderExtraPic {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 imageThumbnailTopArray[i] = cursor.getString(cursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_MOVIE_POSTER_IMAGE_THUMBNAIL));
-                Log.i(TAG, "delete / filepath: top image thumbnail path in database: " + imageThumbnailTopArray[i]);
                 i++;
                 cursor.moveToNext();
             }
@@ -134,7 +128,6 @@ public class DeleteExternalFolderExtraPic {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 imageThumbnailPopArray[i] = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_MOVIE_POSTER_IMAGE_THUMBNAIL));
-                Log.i(TAG, "delete / filepath: pop image thumbnail path in database: " + imageThumbnailPopArray[i]);
                 i++;
                 cursor.moveToNext();
             }
@@ -158,7 +151,6 @@ public class DeleteExternalFolderExtraPic {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 posterFavPathArray[i] = cursor.getString(cursor.getColumnIndex(FavMovieEntry.COLUMN_POSTER_PATH));
-                Log.i(TAG, "delete / filepath: fav poster path in database: " + posterFavPathArray[i]);
                 i++;
                 cursor.moveToNext();
             }
@@ -182,7 +174,6 @@ public class DeleteExternalFolderExtraPic {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 posterTopPathArray[i] = cursor.getString(cursor.getColumnIndex(CacheMovieTopRatedEntry.COLUMN_POSTER_PATH));
-                Log.i(TAG, "delete / filepath: top poster path in database: " + posterTopPathArray[i]);
                 i++;
                 cursor.moveToNext();
             }
@@ -206,7 +197,6 @@ public class DeleteExternalFolderExtraPic {
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
                 posterPopPathArray[i] = cursor.getString(cursor.getColumnIndex(CacheMovieMostPopularEntry.COLUMN_POSTER_PATH));
-                Log.i(TAG, "delete / filepath: pop poster path in database: " + posterPopPathArray[i]);
                 i++;
                 cursor.moveToNext();
             }

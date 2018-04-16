@@ -26,7 +26,6 @@ public class ScheduleNotificationLowerVersion {
     private static final int NOTIFICATION_FLEXTIME_SECONDS = 10;
 
     synchronized public static void scheduleNotification(@NonNull final Context context) {
-        Log.i(TAG, "jag support lower version schedule notification!");
 
         if (sInitialized) {
             return;
